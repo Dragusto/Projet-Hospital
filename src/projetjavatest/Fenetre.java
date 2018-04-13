@@ -51,6 +51,10 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
         // mise en page (layout) de la fenetre visible
         setLayout(new BorderLayout());
         setBounds(0, 0, 400, 400);
+        setSize(800,600);
+//        this.pack();
+//        this.setDefaultLookAndFeelDecorated(true);
+//        this.setExtendedState(Fenetre.MAXIMIZED_BOTH);
         setResizable(true);
         setVisible(true);
 
@@ -81,7 +85,7 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
         nameECE = new JLabel("login ECE :", JLabel.CENTER);
         passwdECE = new JLabel("password ECE :", JLabel.CENTER);
         loginBDD = new JLabel("login base :", JLabel.CENTER);
-        passwdBDD = new JLabel("password base :", JLabel.CENTER);
+        passwdBDD = new JLabel("password ba.se :", JLabel.CENTER);
         nameBDD = new JLabel("nom base :", JLabel.CENTER);
         requeteLabel = new JLabel("Entrez votre requete de sélection :", JLabel.CENTER);
 
@@ -166,17 +170,23 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
      * Méthode privée qui initialise la liste des tables
      */
     private void remplirTables() {
-        maconnexion.ajouterTable("Emp");
-        maconnexion.ajouterTable("Dept");
-        maconnexion.ajouterTable("Mission");
+        maconnexion.ajouterTable("chambre");
+        maconnexion.ajouterTable("docteur");
+        maconnexion.ajouterTable("employe");
+        maconnexion.ajouterTable("hospitalisation");
+        maconnexion.ajouterTable("infirmier");
+        maconnexion.ajouterTable("malade");
+        maconnexion.ajouterTable("service");
+        maconnexion.ajouterTable("soigne");
     }
 
     /**
      * Méthode privée qui initialise la liste des requetes de selection
      */
     private void remplirRequetes() {
-        maconnexion.ajouterRequete("SELECT ename, sal FROM Emp ORDER BY sal;");
-        maconnexion.ajouterRequete("SELECT Dept.*, Emp.*, Mission.* FROM Dept, Emp, Mission WHERE Dept.deptno=Emp.deptno AND Emp.empno=Mission.empno;");
+
+        maconnexion.ajouterRequete("SELECT no_chambre FROM chambre;");
+        maconnexion.ajouterRequete("SELECT code_service FROM chambre;");
         maconnexion.ajouterRequete("SELECT AVG (Emp.sal) FROM Emp, Mission WHERE Emp.empno = Mission.empno;");
         maconnexion.ajouterRequete("SELECT Dept.*, Emp.* FROM Dept, Emp WHERE Dept.deptno=Emp.deptno AND comm>0;");
         maconnexion.ajouterRequete("SELECT hiredate, empno, ename FROM Emp WHERE (((hiredate)>='1981-05-01' And (hiredate)<'1981-05-31'))ORDER BY hiredate;");
