@@ -15,7 +15,7 @@ public class ProjetJavaTest {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Fenetre2 f = new Fenetre2();
+        Fenetre f = new Fenetre();
     }
     
 }
