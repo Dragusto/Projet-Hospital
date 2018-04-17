@@ -8,7 +8,7 @@ package projetjavatest;
 
 /**
  *
- * @author Quentin
+ * @author Quentin Raphael Valentin
  */
 import java.awt.event.*;
 import java.awt.*;
@@ -82,11 +82,11 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         lignes = new JLabel("Lignes", JLabel.CENTER);
         req = new JLabel("Requetes de sélection", JLabel.CENTER);
         res = new JLabel("Résultats requête", JLabel.CENTER);
-        nameECE = new JLabel("login ECE :", JLabel.CENTER);
-        passwdECE = new JLabel("password ECE :", JLabel.CENTER);
-        loginBDD = new JLabel("login base :", JLabel.CENTER);
-        passwdBDD = new JLabel("password ba.se :", JLabel.CENTER);
-        nameBDD = new JLabel("nom base :", JLabel.CENTER);
+        nameECE = new JLabel("Identifiant ECE :", JLabel.CENTER);
+        passwdECE = new JLabel("Mot de passe ECE :", JLabel.CENTER);
+        loginBDD = new JLabel("Id par défaut :", JLabel.CENTER);
+        passwdBDD = new JLabel("mot de passe par défaut :", JLabel.CENTER);
+        nameBDD = new JLabel("nom par défaut :", JLabel.CENTER);
         requeteLabel = new JLabel("Entrez votre requete de sélection :", JLabel.CENTER);
 
         // creation des panneaux
