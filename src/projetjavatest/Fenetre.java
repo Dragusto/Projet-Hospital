@@ -51,10 +51,6 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
         // mise en page (layout) de la fenetre visible
         setLayout(new BorderLayout());
         setBounds(0, 0, 400, 400);
-        setSize(800,600);
-//        this.pack();
-//        this.setDefaultLookAndFeelDecorated(true);
-//        this.setExtendedState(Fenetre.MAXIMIZED_BOTH);
         setResizable(true);
         setVisible(true);
 
@@ -85,7 +81,7 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
         nameECE = new JLabel("login ECE :", JLabel.CENTER);
         passwdECE = new JLabel("password ECE :", JLabel.CENTER);
         loginBDD = new JLabel("login base :", JLabel.CENTER);
-        passwdBDD = new JLabel("password ba.se :", JLabel.CENTER);
+        passwdBDD = new JLabel("password base :", JLabel.CENTER);
         nameBDD = new JLabel("nom base :", JLabel.CENTER);
         requeteLabel = new JLabel("Entrez votre requete de sélection :", JLabel.CENTER);
 
@@ -181,12 +177,11 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
     }
 
     /**
-     * Méthode privée qui initialise la liste des requetes de selection
+     * Méthode privée qui initialise la liste des requetes de selection KI
      */
     private void remplirRequetes() {
-
-        maconnexion.ajouterRequete("SELECT no_chambre FROM chambre;");
         maconnexion.ajouterRequete("SELECT code_service FROM chambre;");
+        maconnexion.ajouterRequete("SELECT Dept.*, Emp.*, Mission.* FROM Dept, Emp, Mission WHERE Dept.deptno=Emp.deptno AND Emp.empno=Mission.empno;");
         maconnexion.ajouterRequete("SELECT AVG (Emp.sal) FROM Emp, Mission WHERE Emp.empno = Mission.empno;");
         maconnexion.ajouterRequete("SELECT Dept.*, Emp.* FROM Dept, Emp WHERE Dept.deptno=Emp.deptno AND comm>0;");
         maconnexion.ajouterRequete("SELECT hiredate, empno, ename FROM Emp WHERE (((hiredate)>='1981-05-01' And (hiredate)<'1981-05-31'))ORDER BY hiredate;");
@@ -202,10 +197,10 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
         maconnexion.ajouterRequeteMaj("INSERT INTO Dept (deptno,dname,loc) VALUES (50,'ECE','Paris');");
 
         // Requêtes de modification
-        maconnexion.ajouterRequeteMaj("UPDATE Dept SET loc='Eiffel' WHERE loc='Paris';");
+        maconnexion.ajouterRequeteMaj("UPDATE Chambre SET no_chambre=110 WHERE no_chambre=101;");
 
         // Requêtes de suppression
-        maconnexion.ajouterRequeteMaj("DELETE FROM Dept WHERE loc='Eiffel';");
+        maconnexion.ajouterRequeteMaj("DELETE FROM Chambre WHERE no_chambre= 101 ;");
 
     }
 
@@ -263,6 +258,12 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
      */
     public void afficherRequetes() {
         for (String requete : maconnexion.requetes) {
+            listeDeRequetes.add(requete);
+        }
+    }
+    
+     public void afficherRequetesMaj() {
+        for (String requete : maconnexion.requetesMaj) {
             listeDeRequetes.add(requete);
         }
     }
@@ -331,6 +332,7 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
                     // afficher la liste de tables et des requetes
                     afficherTables();
                     afficherRequetes();
+                    afficherRequetesMaj();
 
                     // se positionner sur la première table et requête de selection
                     listeDeTables.select(0);
@@ -374,6 +376,7 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
                     // afficher la liste de tables et des requetes
                     afficherTables();
                     afficherRequetes();
+                    afficherRequetesMaj();
 
                     // se positionner sur la première table et requête de selection
                     listeDeTables.select(0);
@@ -390,6 +393,7 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
 
                     // afficher les résultats de la requete selectionnee
                     afficherRes(requeteSelectionnee);
+                   
                 } catch (ClassNotFoundException cnfe) {
                     System.out.println("Connexion echouee : probleme de classe");
                     cnfe.printStackTrace();
@@ -408,6 +412,7 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
                 // afficher les résultats de la requete selectionnee
                 if (afficherRes(requeteSelectionnee) != null) {
                     maconnexion.ajouterRequete(requeteSelectionnee);
+                    maconnexion.ajouterRequeteMaj(requeteSelectionnee);
                     listeDeRequetes.removeAll();
                     afficherRequetes();
                 }
