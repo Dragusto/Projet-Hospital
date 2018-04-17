@@ -16,6 +16,7 @@ import javax.swing.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.lang.*;
 
 /**
  *
@@ -73,12 +74,12 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         nameBDDTexte = new JTextField();
         fenetreLignes = new JTextArea();
         fenetreRes = new JTextArea();
-        RequeteChamp = new JTextField();
-        RequeteTable = new JTextField();
-        RequeteC1 = new JTextField();
-        RequeteC2 = new JTextField();
-        RequeteC3 = new JTextField();
-        Requeterang = new JTextField();
+        RequeteChamp = new JTextField(null);
+        RequeteTable = new JTextField(null);
+        RequeteC1 = new JTextField(null);
+        RequeteC2 = new JTextField(null);
+        RequeteC3 = new JTextField(null);
+        Requeterang = new JTextField(null);
         
         // creation des labels
         tab = new JLabel("Tables", JLabel.CENTER);
@@ -432,19 +433,63 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 e.printStackTrace();
             }
         } else if (source == exec1) {
-            String requetechamp = RequeteChamp.getText(); // récupérer le texte de la requête
-            String requetetable = RequeteTable.getText();
-            String requetec1 = RequeteC1.getText();
-            String requetec2 = RequeteC2.getText();
-            String requetec3 = RequeteC3.getText();
-            String requeterand = Requeterang.getText();
+            String requetechamp = " ";
+            String requetetable = " ";
+            String requetec1 = " ";
+            String requetec2 = " ";
+            String requetec3 = " ";
+            String requeterand = " ";
+            
+            requetechamp = RequeteChamp.getText() + " "; // récupérer le texte de la requête
+            requetetable = RequeteTable.getText() + " ";
+            requetec1 = RequeteC1.getText() + " ";
+            requetec2 = RequeteC2.getText() + " ";
+            requetec3 = RequeteC3.getText() + " ";
+            requeterand = Requeterang.getText() + " ";
             String requeteSelectionnee = null;
             // effacer les résultats
             fenetreRes.removeAll();
-            if (requetechamp!=""){
-            requeteSelectionnee ="SELECT " + requetechamp;
-            if (requetetable!=""){
-            requeteSelectionnee = requeteSelectionnee + " FROM " + requetetable + ";";
+            if (!" ".equals(requetechamp) )
+            {
+                requeteSelectionnee ="SELECT " + requetechamp;
+            }
+            if (!" ".equals(requetetable))
+            {
+                requeteSelectionnee = requeteSelectionnee + " FROM " + requetetable ;
+            }
+            if (!" ".equals(requetec1))
+            {
+                requeteSelectionnee = requeteSelectionnee + " WHERE " +requetec1;
+                if (!" ".equals(requetec2))
+                {
+                    requeteSelectionnee = requeteSelectionnee + " AND " + requetec2;
+                    if (!" ".equals(requetec3))
+                             {
+                                 requeteSelectionnee = requeteSelectionnee + " AND " + requetec3 + ";";
+                             }
+                    else
+                     {
+                         requeteSelectionnee = requeteSelectionnee + ";";
+                     }
+                }
+                else
+                {
+                    requeteSelectionnee = requeteSelectionnee + ";";
+                }
+                }
+                else
+            {
+                requeteSelectionnee = requeteSelectionnee + ";";
+            }
+            System.out.println("champ= " + requetechamp);
+            System.out.println("table = " + requetetable);
+            System.out.println("c1 = " + requetec1);
+            System.out.println("c2 = " + requetec2);
+            System.out.println("c3 = " + requetec3);
+            System.out.println(requeteSelectionnee);
+            
+
+            
             try {
                 // afficher les résultats de la requete selectionnee
                 if (afficherRes(requeteSelectionnee) != null) {
@@ -457,8 +502,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             } catch (SQLException ex) {
 
             }
-            }else{}
-            }else{}
+
         }
     }
 
