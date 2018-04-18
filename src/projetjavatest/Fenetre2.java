@@ -434,68 +434,73 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             }
         } else if (source == exec1) {
             
-            // récupérer le texte de la requête
-            String requetechamp = RequeteChamp.getText() ; 
-            String requetetable = RequeteTable.getText();
-            String requetec1 = RequeteC1.getText();
-            String requetec2 = RequeteC2.getText();
-            String requetec3 = RequeteC3.getText();
-            String requeterand = Requeterang.getText();
-            String requeteSelectionnee = null;
-            // effacer les résultats
-            fenetreRes.removeAll();
-            if (!"".equals(requetechamp) )
-            {
+            try {
+                // récupérer le texte de la requête
+                String requetechamp = RequeteChamp.getText() ;
+                String requetetable = RequeteTable.getText();
+                String requetec1 = RequeteC1.getText();
+                String requetec2 = RequeteC2.getText();
+                String requetec3 = RequeteC3.getText();
+                String requeterand = Requeterang.getText();
+                String requeteSelectionnee = null;
+                // effacer les résultats
+                fenetreRes.removeAll();
+                /*if (!"".equals(requetechamp) )
+                {
                 requeteSelectionnee ="SELECT " + requetechamp;
-            }
-            if (!"".equals(requetetable))
-            {
+                }
+                if (!"".equals(requetetable))
+                {
                 requeteSelectionnee = requeteSelectionnee + " FROM " + requetetable ;
-            }
-            if (!"".equals(requetec1))
-            {
+                }
+                if (!"".equals(requetec1))
+                {
                 requeteSelectionnee = requeteSelectionnee + " WHERE " +requetec1;
                 if (!"".equals(requetec2))
                 {
-                    requeteSelectionnee = requeteSelectionnee + " AND " + requetec2;
-                    if (!"".equals(requetec3))
-                             {
-                                 requeteSelectionnee = requeteSelectionnee + " AND " + requetec3 + ";";
-                             }
-                    else
-                     {
-                         requeteSelectionnee = requeteSelectionnee + ";";
-                     }
+                requeteSelectionnee = requeteSelectionnee + " AND " + requetec2;
+                if (!"".equals(requetec3))
+                {
+                requeteSelectionnee = requeteSelectionnee + " AND " + requetec3 + ";";
                 }
                 else
                 {
-                    requeteSelectionnee = requeteSelectionnee + ";";
+                requeteSelectionnee = requeteSelectionnee + ";";
                 }
                 }
                 else
-            {
+                {
                 requeteSelectionnee = requeteSelectionnee + ";";
-            }
-            System.out.println("champ= " + requetechamp);
-            System.out.println("table = " + requetetable);
-            System.out.println("c1 = " + requetec1);
-            System.out.println("c2 = " + requetec2);
-            System.out.println("c3 = " + requetec3);
-            System.out.println(requeteSelectionnee);
-            
-
-            
-            try {
+                }
+                }
+                else
+                {
+                requeteSelectionnee = requeteSelectionnee + ";";
+                }
+                */
+                System.out.println("champ= " + requetechamp);
+                System.out.println("table = " + requetetable);
+                System.out.println("c1 = " + requetec1);
+                System.out.println("c2 = " + requetec2);
+                System.out.println("c3 = " + requetec3);
+                System.out.println(requeteSelectionnee);
+                
+                maconnexion.executeUpdate(requetechamp);
+                
+                /*try {
                 // afficher les résultats de la requete selectionnee
                 if (afficherRes(requeteSelectionnee) != null) {
-                    maconnexion.ajouterRequete(requeteSelectionnee);
-                    maconnexion.ajouterRequeteMaj(requeteSelectionnee);
-                    listeDeRequetes.removeAll();
-                    afficherRequetes();
+                maconnexion.ajouterRequete(requeteSelectionnee);
+                maconnexion.ajouterRequeteMaj(requeteSelectionnee);
+                listeDeRequetes.removeAll();
+                afficherRequetes();
                 }
-
+                
+                } catch (SQLException ex)*/ {
+                
+            }
             } catch (SQLException ex) {
-
+                Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -510,7 +515,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     @SuppressWarnings("CallToThreadDumpStack")
     public void itemStateChanged(ItemEvent evt) {
         // sélection d'une requete et afficher ses résultats
-        if (evt.getSource() == listeDeRequetes) {
+        /*if (evt.getSource() == listeDeRequetes) {
             // recuperer la liste des lignes de la requete selectionnee
             String requeteSelectionnee = listeDeRequetes.getSelectedItem();
             try {
@@ -518,7 +523,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             } catch (SQLException ex) {
                 Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (evt.getSource() == listeDeTables) {
+        } else */ if (evt.getSource() == listeDeTables) {
             // afficher les lignes de la table sélectionnée
             String nomTable = listeDeTables.getSelectedItem();
             afficherLignes(nomTable);
