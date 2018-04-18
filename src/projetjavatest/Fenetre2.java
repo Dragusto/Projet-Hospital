@@ -131,13 +131,13 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p0.add(local);
         p1.add(tab);
         p1.add(lignes);
-        p1.add(req);
+        //p1.add(req);
         p1.add(res);
         nord.add("North", p0);
         nord.add("North", p1);
         p2.add(listeDeTables);
         p2.add(fenetreLignes);
-        p2.add(listeDeRequetes);
+        //p2.add(listeDeRequetes);
         p2.add(fenetreRes);
         p3.add(Champ);
         p3.add(RequeteChamp);
@@ -174,7 +174,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         listeDeTables.setBackground(Color.CYAN);
         fenetreLignes.setBackground(Color.WHITE);
         listeDeRequetes.setBackground(Color.GREEN);
-        fenetreRes.setBackground(Color.WHITE);
+        fenetreRes.setBackground(Color.GREEN);
         p1.setBackground(Color.LIGHT_GRAY);
 
         // disposition geographique des panneaux
@@ -210,20 +210,20 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
      * Méthode privée qui initialise la liste des requetes de selection KI
      */
     private void remplirRequetes() {
-        maconnexion.ajouterRequete("SELECT code_service FROM chambre;");
+       /* maconnexion.ajouterRequete("SELECT code_service FROM chambre;");
         maconnexion.ajouterRequete("SELECT no_chambre FROM chambre;");
         maconnexion.ajouterRequete("SELECT AVG (Emp.sal) FROM Emp, Mission WHERE Emp.empno = Mission.empno;");
         maconnexion.ajouterRequete("SELECT Dept.*, Emp.* FROM Dept, Emp WHERE Dept.deptno=Emp.deptno AND comm>0;");
         maconnexion.ajouterRequete("SELECT hiredate, empno, ename FROM Emp WHERE (((hiredate)>='1981-05-01' And (hiredate)<'1981-05-31'))ORDER BY hiredate;");
         maconnexion.ajouterRequete("SELECT ename, job FROM Emp ORDER BY job;");
         maconnexion.ajouterRequete("SELECT DISTINCT dname, job FROM Dept, Emp WHERE Dept.deptno=Emp.deptno AND job='Clerk';");
-    }
+    */}
 
     /**
      * Méthode privée qui initialise la liste des requetes de MAJ
      */
     private void remplirRequetesMaj() {
-        // Requêtes d'insertion
+      /*  // Requêtes d'insertion
         maconnexion.ajouterRequeteMaj("INSERT INTO Dept (deptno,dname,loc) VALUES (50,'ECE','Paris');");
 
         // Requêtes de modification
@@ -231,7 +231,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
 
         // Requêtes de suppression
         maconnexion.ajouterRequeteMaj("DELETE FROM Chambre WHERE no_chambre= 101 ;");
-
+*/
     }
 
     /**
@@ -433,37 +433,32 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 e.printStackTrace();
             }
         } else if (source == exec1) {
-            String requetechamp = " ";
-            String requetetable = " ";
-            String requetec1 = " ";
-            String requetec2 = " ";
-            String requetec3 = " ";
-            String requeterand = " ";
             
-            requetechamp = RequeteChamp.getText() + " "; // récupérer le texte de la requête
-            requetetable = RequeteTable.getText() + " ";
-            requetec1 = RequeteC1.getText() + " ";
-            requetec2 = RequeteC2.getText() + " ";
-            requetec3 = RequeteC3.getText() + " ";
-            requeterand = Requeterang.getText() + " ";
+            // récupérer le texte de la requête
+            String requetechamp = RequeteChamp.getText() ; 
+            String requetetable = RequeteTable.getText();
+            String requetec1 = RequeteC1.getText();
+            String requetec2 = RequeteC2.getText();
+            String requetec3 = RequeteC3.getText();
+            String requeterand = Requeterang.getText();
             String requeteSelectionnee = null;
             // effacer les résultats
             fenetreRes.removeAll();
-            if (!" ".equals(requetechamp) )
+            if (!"".equals(requetechamp) )
             {
                 requeteSelectionnee ="SELECT " + requetechamp;
             }
-            if (!" ".equals(requetetable))
+            if (!"".equals(requetetable))
             {
                 requeteSelectionnee = requeteSelectionnee + " FROM " + requetetable ;
             }
-            if (!" ".equals(requetec1))
+            if (!"".equals(requetec1))
             {
                 requeteSelectionnee = requeteSelectionnee + " WHERE " +requetec1;
-                if (!" ".equals(requetec2))
+                if (!"".equals(requetec2))
                 {
                     requeteSelectionnee = requeteSelectionnee + " AND " + requetec2;
-                    if (!" ".equals(requetec3))
+                    if (!"".equals(requetec3))
                              {
                                  requeteSelectionnee = requeteSelectionnee + " AND " + requetec3 + ";";
                              }
@@ -521,7 +516,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             try {
                 afficherRes(requeteSelectionnee);
             } catch (SQLException ex) {
-                Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (evt.getSource() == listeDeTables) {
             // afficher les lignes de la table sélectionnée
