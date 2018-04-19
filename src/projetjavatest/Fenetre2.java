@@ -38,6 +38,12 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     // Declaration swing pour Modifier
     private final JLabel M1,M2,M3,MC1,MC2,MCT;
     private final JTextField ModTable, Mod1, Mod2, Mod3, ModC1,ModC2;
+    // Declaration swing Supprimer
+    0
+    0
+    // Declaration swing Ajouter
+    0
+    0
     private final JTextField nameECETexte, loginBDDTexte, nameBDDTexte;
     private final JPasswordField passwdECETexte, passwdBDDTexte;
     private final JButton connect, local;
@@ -45,8 +51,9 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     private final JButton rechercher,supprimer, ajouter, modifier;
     private final java.awt.List listeDeTables, listeDeRequetes;
     private final JTextArea fenetreLignes, fenetreRes;
-    private final JPanel p0, p1, nord, p2, p3, p4, p5, p6, p7, p8, p9;
-    private JFrame voir, modif;
+    private final JPanel p0, p1, nord, p2, p3, p4, p5, p6, p7;
+    // déclaration de fenetre permetant d'utiliser les fonctions rechercher, modifier, supprimer et ajouter
+    private JFrame voir, modif, suppr, ajout;
     /**
      * Constructeur qui initialise tous les objets graphiques de la fenetre
      */
@@ -69,7 +76,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         exec1 = new JButton("Rechercher");
         exec2 = new JButton("Modifier");
         exec3 = new JButton("Supprimer");
-        exec4 = new JButton("Modifier");
+        exec4 = new JButton("Ajouter");
         
         // Boutons validant la requetes
         rechercher = new JButton("Recherche");
@@ -106,6 +113,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         ModC1 = new JTextField(null);
         ModC2 = new JTextField(null);
         
+        // texte pour supprimer
+        0   
+        // Texte pour ajouter
+        0
         // creation des labels
         tab = new JLabel("Tables", JLabel.CENTER);
         lignes = new JLabel("Lignes", JLabel.CENTER);
@@ -133,18 +144,25 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         M2= new  JLabel("Modification :", JLabel.CENTER);
         M3= new  JLabel("Modification :", JLabel.CENTER);
         
+        // Label pour supprimer
+        0
+        // label pour ajouter
+        0
 // creation des panneaux
         p0 = new JPanel();
         p1 = new JPanel();
         nord = new JPanel();
         p2 = new JPanel();
         p3 = new JPanel();
+        // Panel pour Rechercher
         p4 = new JPanel();
+        // Panel pour Modifier
         p5 = new JPanel();
+        // Panel pour Supprimer
         p6 = new JPanel();
+        // panel pour Ajouter
         p7 = new JPanel();
-        p8 = new JPanel();
-        p9 = new JPanel();
+        
         
         // mise en page des panneaux
         p0.setLayout(new GridLayout(1, 11));
@@ -152,11 +170,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         nord.setLayout(new GridLayout(2, 1));
         p2.setLayout(new GridLayout(1, 4));
         p3.setLayout(new GridLayout(1, 4));
-        // Mise en page du panneau rechercher
-        p4.setLayout(new GridLayout(1,7));
-        
-        p5.setLayout(new GridLayout(2,1));
-        
+            
         // ajout des objets graphqiues dans les panneaux
         p0.add(nameECE);
         p0.add(nameECETexte);
@@ -178,6 +192,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p2.add(listeDeTables);
         p2.add(fenetreLignes);
         p2.add(fenetreRes);
+       // ajout des objets graphique des requetes
         p3.add(exec1);
         p3.add(exec2);
         p3.add(exec3);
@@ -420,7 +435,24 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 System.out.println(requeteSelectionnee);
                 return requeteSelectionnee;
     }
-
+    
+    public String supprimer(){
+        0
+        0
+        0
+        0
+        String requeteSelectionnee = null;
+        return requeteSelectionnee;
+    }
+    
+    public String ajouter(){
+        0
+        0
+        0
+        0
+        String requeteSelectionnee = null;
+        return requeteSelectionnee;
+    }
     /**
      *
      * Afficher les requetes de selection et de MAJ dans la fenetre
@@ -590,7 +622,6 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             p4.add(RequeteC3);
             voir.add("Center",p4);
             voir.add("South",rechercher);
-            System.out.println("ta ");
 
             // effacer les résultats
             fenetreRes.removeAll();
@@ -614,9 +645,40 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             p5.add(ModC2);
             modif.add("Center",p5);
             modif.add("South",modifier);
+            // effacer les résultats
+            fenetreRes.removeAll();
         
         }
-            
+        if (source == exec3) {
+            suppr = new JFrame("Supprimer");
+            suppr.setSize(300, 200);
+            suppr.setVisible(true);
+            p6.setLayout(new GridLayout(3,2));
+            0
+            0
+            0
+            suppr.add("Center", p6);
+            suppr.add("South", supprimer);
+
+            // effacer les résultats
+            fenetreRes.removeAll();
+        }
+        if (source == exec4) {
+            ajout = new JFrame("Ajouter");
+            ajout.setSize(300, 200);
+            ajout.setVisible(true);
+            p7.setLayout(new GridLayout(3,2));
+            0
+            0
+            0
+            0
+            ajout.add("Center", p7);
+            ajout.add("South", ajouter);
+
+            // effacer les résultats
+            fenetreRes.removeAll();
+        }
+        
                 if ( source2 == rechercher){
                     String requeteSelectionnee;
                     requeteSelectionnee = rechercher();
@@ -654,6 +716,44 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 
                     }
                     modif.setVisible(false);
+                }
+                    if ( source2 == supprimer){
+                    String requeteSelectionnee;
+                    requeteSelectionnee = supprimer();
+                    //maconnexion.executeUpdate(requetechamp);
+                
+                    try {
+                        // afficher les résultats de la requete selectionnee
+                        if (afficherRes(requeteSelectionnee) != null) {
+                        maconnexion.ajouterRequete(requeteSelectionnee);
+                        maconnexion.ajouterRequeteMaj(requeteSelectionnee);
+                        listeDeRequetes.removeAll();
+                        afficherRequetes();
+                        }
+                
+                    } catch (SQLException ex) {
+                
+                    }
+                suppr.setVisible(false);
+                }
+                    if ( source2 == ajouter){
+                    String requeteSelectionnee;
+                    requeteSelectionnee = ajouter();
+                    //maconnexion.executeUpdate(requetechamp);
+                
+                    try {
+                        // afficher les résultats de la requete selectionnee
+                        if (afficherRes(requeteSelectionnee) != null) {
+                        maconnexion.ajouterRequete(requeteSelectionnee);
+                        maconnexion.ajouterRequeteMaj(requeteSelectionnee);
+                        listeDeRequetes.removeAll();
+                        afficherRequetes();
+                        }
+                
+                    } catch (SQLException ex) {
+                
+                    }
+                 ajout.setVisible(false);
                 }
                
     }
