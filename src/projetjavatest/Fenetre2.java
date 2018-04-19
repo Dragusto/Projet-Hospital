@@ -165,6 +165,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         passwdBDDTexte.addActionListener(this);
         listeDeTables.addItemListener(this);
         listeDeRequetes.addItemListener(this);
+        
 
         // couleurs des objets graphiques
         tab.setBackground(Color.MAGENTA);
@@ -191,6 +192,8 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             }
         });
     }
+    
+
 
     /**
      * Méthode privée qui initialise la liste des tables
