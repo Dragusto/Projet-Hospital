@@ -34,14 +34,15 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     private Connexion maconnexion;
     private final JLabel tab, req, res, lignes;
     private final JLabel nameECE, passwdECE, loginBDD, passwdBDD, nameBDD;
-    private final JLabel Champ, Table, C1, C2, C3, rang;
+    private final JLabel Champ, Table, C1, C2, C3, rang,M1,M2,M3,MC1,MC2,MCT;
     private final JTextField RequeteChamp, RequeteTable, RequeteC1, RequeteC2, RequeteC3, Requeterang;
+    private final JTextField ModTable, Mod1, Mod2, Mod3, ModC1,ModC2;
     private final JTextField nameECETexte, loginBDDTexte, nameBDDTexte;
     private final JPasswordField passwdECETexte, passwdBDDTexte;
-    private final JButton connect, exec1, local;
+    private final JButton connect, exec1,exec2, local;
     private final java.awt.List listeDeTables, listeDeRequetes;
     private final JTextArea fenetreLignes, fenetreRes;
-    private final JPanel p0, p1, nord, p2, p3, p4, p5;
+    private final JPanel p0, p1, nord, p2, p3, p4, p5,p6,p7,p8,p9;
 
     /**
      * Constructeur qui initialise tous les objets graphiques de la fenetre
@@ -60,7 +61,8 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         // creation des boutons
         connect = new JButton("Connexion ECE");
         local = new JButton("Connexion locale");
-        exec1 = new JButton("Executer");
+        exec1 = new JButton("Filtrer");
+        exec2 = new JButton("Modifier");
 
         // creation des listes pour les tables et les requetes
         listeDeTables = new java.awt.List(10, false);
@@ -76,10 +78,16 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         fenetreRes = new JTextArea();
         RequeteChamp = new JTextField(null);
         RequeteTable = new JTextField(null);
+        Requeterang =new JTextField(null);
         RequeteC1 = new JTextField(null);
         RequeteC2 = new JTextField(null);
         RequeteC3 = new JTextField(null);
-        Requeterang = new JTextField(null);
+        ModTable = new JTextField(null);
+        Mod1 = new JTextField(null);
+        Mod2 = new JTextField(null);
+        Mod3 = new JTextField(null);
+        ModC1 = new JTextField(null);
+        ModC2 = new JTextField(null);
         
         // creation des labels
         tab = new JLabel("Tables", JLabel.CENTER);
@@ -97,6 +105,12 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         C2 = new JLabel("Condition :", JLabel.CENTER);
         C3 = new JLabel("Condition :", JLabel.CENTER);
         rang = new JLabel("Rang : ", JLabel.CENTER);
+        MCT = new JLabel("Table :", JLabel.CENTER);
+        MC1 = new JLabel("Condition :", JLabel.CENTER);
+        MC2 = new JLabel("Condition :", JLabel.CENTER);
+        M1= new  JLabel("Modification :", JLabel.CENTER);
+        M2= new  JLabel("Modification :", JLabel.CENTER);
+        M3= new  JLabel("Modification :", JLabel.CENTER);
         
 // creation des panneaux
         p0 = new JPanel();
@@ -106,15 +120,24 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p3 = new JPanel();
         p4 = new JPanel();
         p5 = new JPanel();
+        p6 = new JPanel();
+        p7 = new JPanel();
+        p8 = new JPanel();
+        p9 = new JPanel(); 
         
         // mise en page des panneaux
         p0.setLayout(new GridLayout(1, 11));
         p1.setLayout(new GridLayout(1, 4));
         nord.setLayout(new GridLayout(2, 1));
         p2.setLayout(new GridLayout(1, 4));
-        p3.setLayout(new GridLayout(1, 6));
+        p3.setLayout(new GridLayout(1, 7));
         p4.setLayout(new GridLayout(1,7));
         p5.setLayout(new GridLayout(2,1));
+        p6.setLayout(new GridLayout(1, 7));
+        p7.setLayout(new GridLayout(1,7));
+        p8.setLayout(new GridLayout(2,1));
+        p9.setLayout(new GridLayout(2,1));
+        
         
         // ajout des objets graphqiues dans les panneaux
         p0.add(nameECE);
@@ -154,10 +177,29 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p4.add(exec1);
         p5.add(p3);
         p5.add(p4);
+        p6.add(MCT);
+        p6.add(ModTable);
+        p6.add(M1);
+        p6.add(Mod1);
+        p6.add(M2);
+        p6.add(Mod2);
+        p7.add(M3);
+        p7.add(Mod3);
+        p7.add(MC1);
+        p7.add(ModC1);
+        p7.add(MC2);
+        p7.add(ModC2);
+        p7.add(exec2);
+        p8.add(p6);
+        p8.add(p7);
+        p9.add(p5);
+        p9.add(p8);
+        
         
         // ajout des listeners
         connect.addActionListener(this);
         exec1.addActionListener(this);
+        exec2.addActionListener(this);
         local.addActionListener(this);
         nameECETexte.addActionListener(this);
         passwdECETexte.addActionListener(this);
@@ -165,7 +207,6 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         passwdBDDTexte.addActionListener(this);
         listeDeTables.addItemListener(this);
         listeDeRequetes.addItemListener(this);
-        
 
         // couleurs des objets graphiques
         tab.setBackground(Color.MAGENTA);
@@ -177,11 +218,12 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         listeDeRequetes.setBackground(Color.GREEN);
         fenetreRes.setBackground(Color.GREEN);
         p1.setBackground(Color.LIGHT_GRAY);
-
+        
         // disposition geographique des panneaux
         add("North", nord);
         add("Center", p2);
-        add("South", p5);
+        add("South",p9);
+
 
 
         // pour fermer la fenetre
@@ -192,8 +234,6 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             }
         });
     }
-    
-
 
     /**
      * Méthode privée qui initialise la liste des tables
@@ -285,6 +325,100 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         }
     }
 
+public String filtrer()
+    {
+        // récupérer le texte de la requête
+                String requetechamp = RequeteChamp.getText() ;
+                String requetetable = RequeteTable.getText();
+                String requetec1 = RequeteC1.getText();
+                String requetec2 = RequeteC2.getText();
+                String requetec3 = RequeteC3.getText();
+                String requeterand = Requeterang.getText();
+                String requeteSelectionnee = null;
+                // effacer les résultats
+                fenetreRes.removeAll();
+                if (!"".equals(requetechamp) )
+                {
+                requeteSelectionnee ="SELECT " + requetechamp;
+                }
+                if (!"".equals(requetetable))
+                {
+                requeteSelectionnee = requeteSelectionnee + " FROM " + requetetable ;
+                }
+                if (!"".equals(requetec1))
+                {
+                requeteSelectionnee = requeteSelectionnee + " WHERE " +requetec1;
+                if (!"".equals(requetec2))
+                {
+                requeteSelectionnee = requeteSelectionnee + " AND " + requetec2;
+                if (!"".equals(requetec3))
+                {
+                requeteSelectionnee = requeteSelectionnee + " AND " + requetec3 + ";";
+                }
+                else
+                {
+                requeteSelectionnee = requeteSelectionnee + ";";
+                }
+                }
+                else
+                {
+                requeteSelectionnee = requeteSelectionnee + ";";
+                }
+                }
+                else
+                {
+                requeteSelectionnee = requeteSelectionnee + ";";
+                }
+                
+                System.out.println("champ= " + requetechamp);
+                System.out.println("table = " + requetetable);
+                System.out.println("c1 = " + requetec1);
+                System.out.println("c2 = " + requetec2);
+                System.out.println("c3 = " + requetec3);
+                System.out.println(requeteSelectionnee);
+                return(requeteSelectionnee);
+    }
+
+    public String modifier()
+    {
+        // récupérer le texte de la requête
+                String Modtable = ModTable.getText();
+                String Modc1 = ModC1.getText();
+                String Modc2 = ModC2.getText();
+                String mod1 = Mod1.getText();
+                String mod2 = Mod2.getText();
+                String mod3 = Mod3.getText();
+                String requeteSelectionnee = null;
+                // effacer les résultats
+                fenetreRes.removeAll();
+                if (!"".equals(ModTable) )
+                {
+                    requeteSelectionnee = "UPDATE " + Modtable;
+                }
+                if (!"".equals(mod1))
+                {
+                    requeteSelectionnee = requeteSelectionnee + " SET " + mod1 ;
+                    if (!"".equals(mod2))
+                    {
+                        requeteSelectionnee = requeteSelectionnee + ", " +mod2;
+                        if (!"".equals(mod3))
+                        {
+                            requeteSelectionnee = requeteSelectionnee + ", " + mod3;
+                        }
+                    }
+                    if (!"".equals(Modc1))
+                    {
+                        requeteSelectionnee = requeteSelectionnee + " WHERE " + Modc1;
+                        if(!"".equals(Modc2))
+                        {
+                            requeteSelectionnee = requeteSelectionnee + " AND " + Modc1;
+                        }
+                    }
+                }
+                requeteSelectionnee = requeteSelectionnee + " ;";
+                System.out.println(requeteSelectionnee);
+                return requeteSelectionnee;
+    }
     /**
      *
      * Afficher les requetes de selection et de MAJ dans la fenetre
@@ -395,7 +529,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             try {
                 try {
                     // tentative de connexion si les 4 attributs sont remplis
-                    maconnexion = new Connexion(nameBDDTexte.getText(), "root", "");
+                    maconnexion = new Connexion(/*nameBDDTexte.getText()*/"hopital", "root", "");
 
                     // effacer les listes de tables et de requêtes
                     listeDeTables.removeAll();
@@ -437,60 +571,11 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             }
         } else if (source == exec1) {
             
-            try {
-                // récupérer le texte de la requête
-                String requetechamp = RequeteChamp.getText() ;
-                String requetetable = RequeteTable.getText();
-                String requetec1 = RequeteC1.getText();
-                String requetec2 = RequeteC2.getText();
-                String requetec3 = RequeteC3.getText();
-                String requeterand = Requeterang.getText();
-                String requeteSelectionnee = null;
-                // effacer les résultats
-                fenetreRes.removeAll();
-                /*if (!"".equals(requetechamp) )
-                {
-                requeteSelectionnee ="SELECT " + requetechamp;
-                }
-                if (!"".equals(requetetable))
-                {
-                requeteSelectionnee = requeteSelectionnee + " FROM " + requetetable ;
-                }
-                if (!"".equals(requetec1))
-                {
-                requeteSelectionnee = requeteSelectionnee + " WHERE " +requetec1;
-                if (!"".equals(requetec2))
-                {
-                requeteSelectionnee = requeteSelectionnee + " AND " + requetec2;
-                if (!"".equals(requetec3))
-                {
-                requeteSelectionnee = requeteSelectionnee + " AND " + requetec3 + ";";
-                }
-                else
-                {
-                requeteSelectionnee = requeteSelectionnee + ";";
-                }
-                }
-                else
-                {
-                requeteSelectionnee = requeteSelectionnee + ";";
-                }
-                }
-                else
-                {
-                requeteSelectionnee = requeteSelectionnee + ";";
-                }
-                */
-                System.out.println("champ= " + requetechamp);
-                System.out.println("table = " + requetetable);
-                System.out.println("c1 = " + requetec1);
-                System.out.println("c2 = " + requetec2);
-                System.out.println("c3 = " + requetec3);
-                System.out.println(requeteSelectionnee);
+                String requeteSelectionnee;
+                requeteSelectionnee=filtrer();
+                //maconnexion.executeUpdate(requetechamp);
                 
-                maconnexion.executeUpdate(requetechamp);
-                
-                /*try {
+                try {
                 // afficher les résultats de la requete selectionnee
                 if (afficherRes(requeteSelectionnee) != null) {
                 maconnexion.ajouterRequete(requeteSelectionnee);
@@ -499,15 +584,19 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 afficherRequetes();
                 }
                 
-                } catch (SQLException ex)*/ {
+                } catch (SQLException ex) {
                 
             }
+            }else if (source == exec2)
+            {
+            try {
+                maconnexion.executeUpdate(modifier());
             } catch (SQLException ex) {
                 Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            System.out.println("aga");
+            }
         }
-    }
 
     /**
      *
@@ -518,7 +607,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     @SuppressWarnings("CallToThreadDumpStack")
     public void itemStateChanged(ItemEvent evt) {
         // sélection d'une requete et afficher ses résultats
-        /*if (evt.getSource() == listeDeRequetes) {
+        if (evt.getSource() == listeDeRequetes) {
             // recuperer la liste des lignes de la requete selectionnee
             String requeteSelectionnee = listeDeRequetes.getSelectedItem();
             try {
@@ -526,10 +615,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             } catch (SQLException ex) {
                 Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else */ if (evt.getSource() == listeDeTables) {
+        } else if (evt.getSource() == listeDeTables) {
             // afficher les lignes de la table sélectionnée
             String nomTable = listeDeTables.getSelectedItem();
             afficherLignes(nomTable);
         }
-    }
+}
 }
