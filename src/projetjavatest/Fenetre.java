@@ -362,7 +362,7 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
             try {
                 try {
                     // tentative de connexion si les 4 attributs sont remplis
-                    maconnexion = new Connexion(nameBDDTexte.getText(), "root", "");
+                    maconnexion = new Connexion(nameBDDTexte.getText(), "root", "root");
 
                     // effacer les listes de tables et de requêtes
                     listeDeTables.removeAll();
