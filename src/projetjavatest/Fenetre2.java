@@ -39,11 +39,13 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     private final JLabel M1,M2,M3,MC1,MC2,MCT;
     private final JTextField ModTable, Mod1, Mod2, Mod3, ModC1,ModC2;
     // Declaration swing Supprimer
-    0
-    0
+    private final JLabel DT,DC1,DC2;
+    private final JTextField DelT,DelC1,DelC2;
     // Declaration swing Ajouter
-    0
-    0
+    private final JLabel IT,IC,IV;
+    private final JTextField InTa,InC,InV;
+     
+    //Déclaration Swing Fenêtre principale 
     private final JTextField nameECETexte, loginBDDTexte, nameBDDTexte;
     private final JPasswordField passwdECETexte, passwdBDDTexte;
     private final JButton connect, local;
@@ -114,9 +116,15 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         ModC2 = new JTextField(null);
         
         // texte pour supprimer
-        0   
+        DelT = new JTextField(null);
+        DelC1 = new JTextField(null);
+        DelC2 = new JTextField(null);
+
         // Texte pour ajouter
-        0
+        InTa = new JTextField(null);
+        InC = new JTextField(null);
+        InV = new JTextField(null);
+        
         // creation des labels
         tab = new JLabel("Tables", JLabel.CENTER);
         lignes = new JLabel("Lignes", JLabel.CENTER);
@@ -145,10 +153,16 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         M3= new  JLabel("Modification :", JLabel.CENTER);
         
         // Label pour supprimer
-        0
+        DT = new JLabel("Table :", JLabel.CENTER);
+        DC1 = new JLabel("Condition :", JLabel.CENTER);
+        DC2 = new JLabel("Condition :", JLabel.CENTER);
+        
         // label pour ajouter
-        0
-// creation des panneaux
+        IT = new JLabel("Table :", JLabel.CENTER);
+        IC= new  JLabel("Champs :", JLabel.CENTER);
+        IV= new  JLabel("Valeurs :", JLabel.CENTER);
+        
+        // creation des panneaux
         p0 = new JPanel();
         p1 = new JPanel();
         nord = new JPanel();
@@ -437,21 +451,39 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     }
     
     public String supprimer(){
-        0
-        0
-        0
-        0
-        String requeteSelectionnee = null;
-        return requeteSelectionnee;
+          // récupérer le texte de la requête
+                String delt = DelT.getText();
+                String delc1 = DelC1.getText();
+                String delc2 = DelC2.getText();
+                String requeteSelectionnee = null;
+                // effacer les résultats
+                fenetreRes.removeAll();
+                requeteSelectionnee = "DELETE FROM " + delt;
+                if (!"".equals(delc1))
+                {
+                    requeteSelectionnee = requeteSelectionnee + " WHERE " + delc1;
+                    if(!"".equals(delc2))
+                    {
+                        requeteSelectionnee = requeteSelectionnee + " AND " + delc2;
+                    }
+                }
+                requeteSelectionnee = requeteSelectionnee + " ;";
+                System.out.println(requeteSelectionnee);
+                return requeteSelectionnee;
     }
     
-    public String ajouter(){
-        0
-        0
-        0
-        0
-        String requeteSelectionnee = null;
-        return requeteSelectionnee;
+    public String ajouter()
+    {
+       // récupérer le texte de la requête
+                String inta = InTa.getText();
+                String inc = InC.getText();
+                String inv = InV.getText();
+                String requeteSelectionnee = null;
+                // effacer les résultats
+                fenetreRes.removeAll();
+                requeteSelectionnee = "INSERT INTO " + inta + "(" + inc + ") VALUES(" + inv + ");"; 
+                System.out.println(requeteSelectionnee);
+                return requeteSelectionnee;
     }
     /**
      *
@@ -654,9 +686,12 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             suppr.setSize(300, 200);
             suppr.setVisible(true);
             p6.setLayout(new GridLayout(3,2));
-            0
-            0
-            0
+            p6.add(DT);
+            p6.add(DelT);
+            p6.add(DC1);
+            p6.add(DelC1);
+            p6.add(DC2);
+            p6.add(DelC2);
             suppr.add("Center", p6);
             suppr.add("South", supprimer);
 
@@ -668,10 +703,12 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             ajout.setSize(300, 200);
             ajout.setVisible(true);
             p7.setLayout(new GridLayout(3,2));
-            0
-            0
-            0
-            0
+            p7.add(IT);
+            p7.add(InTa);
+            p7.add(IC);
+            p7.add(InC);
+            p7.add(IV);
+            p7.add(InV);
             ajout.add("Center", p7);
             ajout.add("South", ajouter);
 
@@ -679,81 +716,55 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             fenetreRes.removeAll();
         }
         
-                if ( source2 == rechercher){
+                if ( source2 == rechercher)
+                {
                     String requeteSelectionnee;
                     requeteSelectionnee = rechercher();
-                    //maconnexion.executeUpdate(requetechamp);
-                
                     try {
                         // afficher les résultats de la requete selectionnee
-                        if (afficherRes(requeteSelectionnee) != null) {
-                        maconnexion.ajouterRequete(requeteSelectionnee);
-                        maconnexion.ajouterRequeteMaj(requeteSelectionnee);
-                        listeDeRequetes.removeAll();
-                        afficherRequetes();
+                        if (afficherRes(requeteSelectionnee) != null) 
+                        {
+                            maconnexion.ajouterRequete(requeteSelectionnee);
+                            listeDeRequetes.removeAll();
+                            afficherRequetes();
                         }
-                
                     } catch (SQLException ex) {
                 
                     }
-                voir.setVisible(false);
+                    voir.setVisible(false);
                 }
-                    if ( source2 == modifier){
+                if ( source2 == modifier)
+                {
                     String requeteSelectionnee;
                     requeteSelectionnee = modifier();
-                    //maconnexion.executeUpdate(requetechamp);
-                
                     try {
-                        // afficher les résultats de la requete selectionnee
-                        if (afficherRes(requeteSelectionnee) != null) {
-                        maconnexion.ajouterRequete(requeteSelectionnee);
-                        maconnexion.ajouterRequeteMaj(requeteSelectionnee);
-                        listeDeRequetes.removeAll();
-                        afficherRequetes();
+                            maconnexion.executeUpdate(requeteSelectionnee);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                
-                    } catch (SQLException ex) {
-                
-                    }
                     modif.setVisible(false);
                 }
-                    if ( source2 == supprimer){
+                if ( source2 == supprimer)
+                {
                     String requeteSelectionnee;
                     requeteSelectionnee = supprimer();
-                    //maconnexion.executeUpdate(requetechamp);
-                
                     try {
-                        // afficher les résultats de la requete selectionnee
-                        if (afficherRes(requeteSelectionnee) != null) {
-                        maconnexion.ajouterRequete(requeteSelectionnee);
-                        maconnexion.ajouterRequeteMaj(requeteSelectionnee);
-                        listeDeRequetes.removeAll();
-                        afficherRequetes();
+                            maconnexion.executeUpdate(requeteSelectionnee);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                
-                    } catch (SQLException ex) {
-                
-                    }
-                suppr.setVisible(false);
+                    suppr.setVisible(false);
                 }
-                    if ( source2 == ajouter){
+                if ( source2 == ajouter)
+                {
                     String requeteSelectionnee;
                     requeteSelectionnee = ajouter();
-                    //maconnexion.executeUpdate(requetechamp);
-                
                     try {
-                        // afficher les résultats de la requete selectionnee
-                        if (afficherRes(requeteSelectionnee) != null) {
-                        maconnexion.ajouterRequete(requeteSelectionnee);
-                        maconnexion.ajouterRequeteMaj(requeteSelectionnee);
-                        listeDeRequetes.removeAll();
-                        afficherRequetes();
+                            maconnexion.executeUpdate(requeteSelectionnee);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                
-                    } catch (SQLException ex) {
-                
-                    }
-                 ajout.setVisible(false);
+                    ajout.setVisible(false);
                 }
                
     }
