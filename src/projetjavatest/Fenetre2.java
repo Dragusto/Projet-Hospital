@@ -32,33 +32,39 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
 
     private Connexion maconnexion;
     private final JLabel tab, req, res, lignes;
-    private final JLabel nameECE, passwdECE, loginBDD, passwdBDD, nameBDD, vide;
+    private final JLabel nameECE, passwdECE, loginBDD, passwdBDD, nameBDD;
+    private final JLabel vide1, vide2;
+    private final JOptionPane error1, error2;
 
     // déclaration Swing fenetre pour Rechercher
     private final JLabel Champ, Table, C1, C2, C3, rang;
     private final JTextField RequeteChamp, RequeteTable, RequeteC1, RequeteC2, RequeteC3, Requeterang;
+    private final JPanel p4;
 
     // Declaration Swing fenetre pour Modifier
     private final JLabel M1, M2, M3, MC1, MC2, MCT;
     private final JTextField ModTable, Mod1, Mod2, Mod3, ModC1, ModC2;
+    private final JPanel p5;
 
     // Declaration Swing fenetre Supprimer
     private final JLabel DT, DC1, DC2;
     private final JTextField DelT, DelC1, DelC2;
+    private final JPanel p6;
 
     // Declaration Swing fenetre Ajouter
     private final JLabel IT, IC, IV;
     private final JTextField InTa, InC, InV;
+    private final JPanel p7;
 
     //Déclaration Swing Fenêtre principale
     private final JTextField nameECETexte, loginBDDTexte, nameBDDTexte;
     private final JPasswordField passwdECETexte, passwdBDDTexte;
     private final JButton connect, local;
-    private final JButton exec1, exec2, exec3, exec4;
+    private final JButton exec1, exec2, exec3, exec4, deco;
     private final JButton rechercher, supprimer, ajouter, modifier;
     private final java.awt.List listeDeTables, listeDeRequetes;
     private final JTextArea fenetreLignes, fenetreRes;
-    private final JPanel p0, p1, nord, p2, p3, p4, p5, p6, p7;
+    private final JPanel p0, p1, nord, p2, p3;
     private final JLayeredPane p01;
     private final JScrollBar scroll1, scroll2, scroll3, scroll4;
     // declaration de fenetre
@@ -88,6 +94,11 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         exec2 = new JButton("Modifier");
         exec3 = new JButton("Supprimer");
         exec4 = new JButton("Ajouter");
+        deco = new JButton("Deconnection");
+
+        //Creation messages erreur
+        error1 = new JOptionPane();
+        error2 = new JOptionPane();
 
         // Boutons validant la requetes
         rechercher = new JButton("Recherche");
@@ -142,9 +153,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         nameECE = new JLabel("login ECE :", JLabel.CENTER);
         passwdECE = new JLabel("password ECE :", JLabel.CENTER);
         loginBDD = new JLabel("login base :", JLabel.CENTER);
+        vide1 = new JLabel("  ", JLabel.CENTER);
         passwdBDD = new JLabel("password base :", JLabel.CENTER);
         nameBDD = new JLabel("           nom base :", JLabel.CENTER);
-        vide = new JLabel("  ", JLabel.CENTER);
+        vide2 = new JLabel("  ", JLabel.CENTER);
 
         // creation des scrollbar
         scroll1 = new JScrollBar();
@@ -198,7 +210,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
 
         // mise en page des panneaux
         p0.setLayout(new GridLayout(4, 2));
-        p01.setLayout(new GridLayout(4, 2));
+        p01.setLayout(new GridLayout(3, 2));
         p1.setLayout(new GridLayout(1, 4));
         nord.setLayout(new BoxLayout(nord, BoxLayout.PAGE_AXIS));
         p2.setLayout(new GridLayout(1, 4));
@@ -213,17 +225,19 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p0.add(loginBDDTexte);
         p0.add(passwdBDD);
         p0.add(passwdBDDTexte);
-        p01.add(vide);
+
         p01.add(nameBDD);
         p01.add(nameBDDTexte);
 
         nord.add(p0);
         connect.setPreferredSize(new Dimension(100, 60));
         nord.add(connect);
-        p01.setPreferredSize(new Dimension(500, 60));
+        nord.add(vide1);
+        p01.setPreferredSize(new Dimension(500, 50));
         nord.add(p01);
         local.setPreferredSize(new Dimension(100, 60));
         nord.add(local);
+        nord.add(vide2);
 
         add(nord);
 //        // ajout des listeners
@@ -241,6 +255,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         exec2.addActionListener(this);
         exec3.addActionListener(this);
         exec4.addActionListener(this);
+        deco.addActionListener(this);
 
         // Ajouts des Listeners de confirmation
         rechercher.addActionListener(this);
@@ -271,11 +286,11 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p3.add(exec2);
         p3.add(exec3);
         p3.add(exec4);
-        // disposition geographique des panneaux
+        p3.add(deco);
 
-        setVisible(true);
-        //add("Center", p2);
-        //add("South", p3);
+        // disposition geographique des panneaux
+        this.setVisible(true);
+
         // pour fermer la fenetre
         addWindowListener(new WindowAdapter() {
             @Override
@@ -512,122 +527,141 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     @Override
     @SuppressWarnings("CallToThreadDumpStack")
     public void actionPerformed(ActionEvent evt) {
-        Object source = evt.getSource();
+        Object source = null;
+        source = evt.getSource();
 
         // tester cas de la commande evenementielle
         if (source == connect) {
             ArrayList<String> liste;
             String passwdECEString = new String(passwdECETexte.getPassword());
             String passwdBDDString = new String(passwdBDDTexte.getPassword());
-            try {
+            if ((!"".equals(nameECETexte.getText())) || (!"".equals(passwdECEString)) || (!"".equals(loginBDDTexte.getText())) || (!"".equals(passwdBDDString))) {
                 try {
+                    try {
 
-                    // tentative de connexion si les 4 attributs sont remplis
-                    maconnexion = new Connexion(nameECETexte.getText(), passwdECEString,
-                            loginBDDTexte.getText(), passwdBDDString);
-                    setVisible(false);
-                    connecc = new JFrame("Connecté");
-                    connecc.pack();
-                    connecc.setDefaultLookAndFeelDecorated(true);
-                    connecc.setExtendedState(Fenetre.MAXIMIZED_BOTH);
-                    connecc.setVisible(true);
-                    connecc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    connecc.add("North", p1);
-                    connecc.add("Center", p2);
-                    connecc.add("South", p3);
+                        // tentative de connexion si les 4 attributs sont remplis
+                        maconnexion = new Connexion(nameECETexte.getText(), passwdECEString,
+                                loginBDDTexte.getText(), passwdBDDString);
+                        setVisible(false);
+                        connecc = new JFrame("Connecté");
+                        connecc.pack();
+                        connecc.setDefaultLookAndFeelDecorated(true);
+                        connecc.setExtendedState(Fenetre.MAXIMIZED_BOTH);
+                        connecc.setVisible(true);
+                        connecc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        connecc.add("North", p1);
+                        connecc.add("Center", p2);
+                        connecc.add("South", p3);
 
-                    // effacer les listes de tables et de requêtes
-                    listeDeTables.removeAll();
-                    listeDeRequetes.removeAll();
+                        // effacer les listes de tables et de requêtes
+                        listeDeTables.removeAll();
+                        listeDeRequetes.removeAll();
 
-                    // initialisation de la liste des requetes de selection et de MAJ
-                    remplirTables();
-                    remplirRequetes();
-                    remplirRequetesMaj();
+                        // initialisation de la liste des requetes de selection et de MAJ
+                        remplirTables();
+                        remplirRequetes();
+                        remplirRequetesMaj();
 
-                    // afficher la liste de tables et des requetes
-                    afficherTables();
-                    afficherRequetes();
-                    afficherRequetesMaj();
+                        // afficher la liste de tables et des requetes
+                        afficherTables();
+                        afficherRequetes();
+                        afficherRequetesMaj();
 
-                    // se positionner sur la première table et requête de selection
-                    listeDeTables.select(0);
-                    listeDeRequetes.select(0);
+                        // se positionner sur la première table et requête de selection
+                        listeDeTables.select(0);
+                        listeDeRequetes.select(0);
 
-                    // afficher les champs de la table sélectionnée
-                    String nomTable = listeDeTables.getSelectedItem();
+                        // afficher les champs de la table sélectionnée
+                        String nomTable = listeDeTables.getSelectedItem();
 
-                    // recuperer les lignes de la table selectionnee
-                    afficherLignes(nomTable);
+                        // recuperer les lignes de la table selectionnee
+                        afficherLignes(nomTable);
 
-                    // recuperer la liste des lignes de la requete selectionnee
-                    String requeteSelectionnee = listeDeRequetes.getSelectedItem();
+                        // recuperer la liste des lignes de la requete selectionnee
+                        String requeteSelectionnee = listeDeRequetes.getSelectedItem();
 
-                    // afficher les résultats de la requete selectionnee
-                    afficherRes(requeteSelectionnee);
-                } catch (ClassNotFoundException cnfe) {
-                    System.out.println("Connexion echouee : probleme de classe");
-                    cnfe.printStackTrace();
+                        // afficher les résultats de la requete selectionnee
+                        afficherRes(requeteSelectionnee);
+                    } catch (ClassNotFoundException cnfe) {
+                        System.out.println("Connexion echouee : probleme de classe");
+                        cnfe.printStackTrace();
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Connexion echouee : probleme SQL");
+                    e.printStackTrace();
+                    error1.showMessageDialog(null, "Les informations saisies sont incorrect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (SQLException e) {
-                System.out.println("Connexion echouee : probleme SQL");
-                e.printStackTrace();
+            } else {
+                error1.showMessageDialog(null, "Les informations saisies sont incorrect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
         } else if (source == local) {
             ArrayList<String> liste;
-            try {
+            if (!"".equals(nameBDDTexte.getText())) {
                 try {
-                    // tentative de connexion si les 4 attributs sont remplis
-                    maconnexion = new Connexion(nameBDDTexte.getText(), "root", "");
-                    setVisible(false);
-                    connecl = new JFrame("Connecté");
-                    connecl.pack();
-                    connecl.setDefaultLookAndFeelDecorated(true);
-                    connecl.setExtendedState(Fenetre.MAXIMIZED_BOTH);
-                    connecl.setVisible(true);
-                    connecl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    try {
+                        // tentative de connexion si les 4 attributs sont remplis
+                        maconnexion = new Connexion(nameBDDTexte.getText(), "root", "");
+                        setVisible(false);
+                        connecl = new JFrame("Connecté");
+                        connecl.pack();
+                        connecl.setDefaultLookAndFeelDecorated(true);
+                        connecl.setExtendedState(Fenetre.MAXIMIZED_BOTH);
+                        connecl.setVisible(true);
+                        connecl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                    connecl.add("North", p1);
-                    connecl.add("Center", p2);
-                    connecl.add("South", p3);
-                    // effacer les listes de tables et de requêtes
-                    listeDeTables.removeAll();
-                    listeDeRequetes.removeAll();
+                        connecl.add("North", p1);
+                        connecl.add("Center", p2);
+                        connecl.add("South", p3);
+                        // effacer les listes de tables et de requêtes
+                        listeDeTables.removeAll();
+                        listeDeRequetes.removeAll();
 
-                    // initialisation de la liste des requetes de selection et de MAJ
-                    remplirTables();
-                    remplirRequetes();
-                    remplirRequetesMaj();
+                        // initialisation de la liste des requetes de selection et de MAJ
+                        remplirTables();
+                        remplirRequetes();
+                        remplirRequetesMaj();
 
-                    // afficher la liste de tables et des requetes
-                    afficherTables();
-                    afficherRequetes();
-                    afficherRequetesMaj();
+                        // afficher la liste de tables et des requetes
+                        afficherTables();
+                        afficherRequetes();
+                        afficherRequetesMaj();
 
-                    // se positionner sur la première table et requête de selection
-                    listeDeTables.select(0);
-                    listeDeRequetes.select(0);
+                        // se positionner sur la première table et requête de selection
+                        listeDeTables.select(0);
+                        listeDeRequetes.select(0);
 
-                    // afficher les champs de la table sélectionnée
-                    String nomTable = listeDeTables.getSelectedItem();
+                        // afficher les champs de la table sélectionnée
+                        String nomTable = listeDeTables.getSelectedItem();
 
-                    // recuperer les lignes de la table selectionnee
-                    afficherLignes(nomTable);
+                        // recuperer les lignes de la table selectionnee
+                        afficherLignes(nomTable);
 
-                    // recuperer la liste des lignes de la requete selectionnee
-                    String requeteSelectionnee = listeDeRequetes.getSelectedItem();
+                        // recuperer la liste des lignes de la requete selectionnee
+                        String requeteSelectionnee = listeDeRequetes.getSelectedItem();
 
-                    // afficher les résultats de la requete selectionnee
-                    afficherRes(requeteSelectionnee);
+                        // afficher les résultats de la requete selectionnee
+                        afficherRes(requeteSelectionnee);
 
-                } catch (ClassNotFoundException cnfe) {
-                    System.out.println("Connexion echouee : probleme de classe");
-                    cnfe.printStackTrace();
+                    } catch (ClassNotFoundException cnfe) {
+                        System.out.println("Connexion echouee : probleme de classe");
+                        cnfe.printStackTrace();
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Connexion echouee : probleme SQL");
+                    e.printStackTrace();
+                    error2.showMessageDialog(null, "la base local est incorect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (SQLException e) {
-                System.out.println("Connexion echouee : probleme SQL");
-                e.printStackTrace();
+            } else {
+                error2.showMessageDialog(null, "la base local est incorect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
+        }
+        if (source == deco) {
+            setVisible(true);
+            connecl.removeNotify();
+        }
+        if (source == deco) {
+            setVisible(true);
+            connecl.removeNotify();
         }
         if (source == exec1) {
             voir = new JFrame("Rechercher");
@@ -766,15 +800,18 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
      */
     @Override
     @SuppressWarnings("CallToThreadDumpStack")
-    public void itemStateChanged(ItemEvent evt) {
+    public void itemStateChanged(ItemEvent evt
+    ) {
         // sélection d'une requete et afficher ses résultats
         if (evt.getSource() == listeDeRequetes) {
             // recuperer la liste des lignes de la requete selectionnee
             String requeteSelectionnee = listeDeRequetes.getSelectedItem();
             try {
                 afficherRes(requeteSelectionnee);
+
             } catch (SQLException ex) {
-                Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Fenetre2.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         } else if (evt.getSource() == listeDeTables) {
             // afficher les lignes de la table sélectionnée
