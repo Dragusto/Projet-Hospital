@@ -32,7 +32,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
 
     private Connexion maconnexion;
     private final JLabel tab, req, res, lignes;
-    private final JLabel nameECE, passwdECE, loginBDD, passwdBDD, nameBDD;
+    private final JLabel nameECE, passwdECE, loginBDD, passwdBDD, nameBDD, vide;
 
     // déclaration Swing fenetre pour Rechercher
     private final JLabel Champ, Table, C1, C2, C3, rang;
@@ -59,7 +59,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     private final java.awt.List listeDeTables, listeDeRequetes;
     private final JTextArea fenetreLignes, fenetreRes;
     private final JPanel p0, p1, nord, p2, p3, p4, p5, p6, p7;
+    private final JLayeredPane p01;
     private final JScrollBar scroll1, scroll2, scroll3, scroll4;
+    // declaration de fenetre
+    private JFrame c, connecc, connecl;
     // déclaration de fenetre permetant d'utiliser les fonctions rechercher, modifier, supprimer et ajouter
     private JFrame voir, modif, suppr, ajout;
 
@@ -69,18 +72,17 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     public Fenetre2() {
 
         // creation par heritage de la fenetre
-        super("Projet d'utilisation de JDBC dans MySQL");
+        super("Connection");
 
         // mise en page (layout) de la fenetre visible
-        setLayout(new BorderLayout());
-        setSize(400, 400);
-        setResizable(true);
-        setVisible(true);
+        setSize(420, 400);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // creation des boutons
         connect = new JButton("Connexion ECE");
         local = new JButton("Connexion locale");
-
+        local.setSize(new Dimension(60, 100));
         // Boutons selection choix
         exec1 = new JButton("Rechercher");
         exec2 = new JButton("Modifier");
@@ -141,7 +143,8 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         passwdECE = new JLabel("password ECE :", JLabel.CENTER);
         loginBDD = new JLabel("login base :", JLabel.CENTER);
         passwdBDD = new JLabel("password base :", JLabel.CENTER);
-        nameBDD = new JLabel("nom base :", JLabel.CENTER);
+        nameBDD = new JLabel("           nom base :", JLabel.CENTER);
+        vide = new JLabel("  ", JLabel.CENTER);
 
         // creation des scrollbar
         scroll1 = new JScrollBar();
@@ -179,6 +182,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
 
         // creation des panneaux
         p0 = new JPanel();
+        p01 = new JLayeredPane();
         p1 = new JPanel();
         nord = new JPanel();
         p2 = new JPanel();
@@ -193,9 +197,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p7 = new JPanel();
 
         // mise en page des panneaux
-        p0.setLayout(new GridLayout(1, 11));
+        p0.setLayout(new GridLayout(4, 2));
+        p01.setLayout(new GridLayout(4, 2));
         p1.setLayout(new GridLayout(1, 4));
-        nord.setLayout(new GridLayout(2, 1));
+        nord.setLayout(new BoxLayout(nord, BoxLayout.PAGE_AXIS));
         p2.setLayout(new GridLayout(1, 4));
         p3.setLayout(new GridLayout(1, 4));
 
@@ -208,25 +213,20 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p0.add(loginBDDTexte);
         p0.add(passwdBDD);
         p0.add(passwdBDDTexte);
-        p0.add(connect);
-        p0.add(nameBDD);
-        p0.add(nameBDDTexte);
-        p0.add(local);
-        p1.add(tab);
-        p1.add(lignes);
-        p1.add(res);
-        nord.add("North", p0);
-        nord.add("North", p1);
-        p2.add(listeDeTables);
-        p2.add(fenetreLignes);
-        p2.add(fenetreRes);
-        // ajout des objets graphique des requetes
-        p3.add(exec1);
-        p3.add(exec2);
-        p3.add(exec3);
-        p3.add(exec4);
+        p01.add(vide);
+        p01.add(nameBDD);
+        p01.add(nameBDDTexte);
 
-        // ajout des listeners
+        nord.add(p0);
+        connect.setPreferredSize(new Dimension(100, 60));
+        nord.add(connect);
+        p01.setPreferredSize(new Dimension(500, 60));
+        nord.add(p01);
+        local.setPreferredSize(new Dimension(100, 60));
+        nord.add(local);
+
+        add(nord);
+//        // ajout des listeners
         connect.addActionListener(this);
         local.addActionListener(this);
         nameECETexte.addActionListener(this);
@@ -259,11 +259,23 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         fenetreRes.setBackground(Color.GREEN);
         p1.setBackground(Color.LIGHT_GRAY);
 
-        // disposition geographique des panneaux
-        add("North", nord);
-        add("Center", p2);
-        add("South", p3);
+        p1.add(tab);
+        p1.add(lignes);
+        p1.add(res);
 
+        p2.add(listeDeTables);
+        p2.add(fenetreLignes);
+        p2.add(fenetreRes);
+        // ajout des objets graphique des requetes
+        p3.add(exec1);
+        p3.add(exec2);
+        p3.add(exec3);
+        p3.add(exec4);
+        // disposition geographique des panneaux
+
+        setVisible(true);
+        //add("Center", p2);
+        //add("South", p3);
         // pour fermer la fenetre
         addWindowListener(new WindowAdapter() {
             @Override
@@ -291,29 +303,13 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
      * Méthode privée qui initialise la liste des requetes de selection KI
      */
     private void remplirRequetes() {
-        /* maconnexion.ajouterRequete("SELECT code_service FROM chambre;");
-         maconnexion.ajouterRequete("SELECT no_chambre FROM chambre;");
-         maconnexion.ajouterRequete("SELECT AVG (Emp.sal) FROM Emp, Mission WHERE Emp.empno = Mission.empno;");
-         maconnexion.ajouterRequete("SELECT Dept.*, Emp.* FROM Dept, Emp WHERE Dept.deptno=Emp.deptno AND comm>0;");
-         maconnexion.ajouterRequete("SELECT hiredate, empno, ename FROM Emp WHERE (((hiredate)>='1981-05-01' And (hiredate)<'1981-05-31'))ORDER BY hiredate;");
-         maconnexion.ajouterRequete("SELECT ename, job FROM Emp ORDER BY job;");
-         maconnexion.ajouterRequete("SELECT DISTINCT dname, job FROM Dept, Emp WHERE Dept.deptno=Emp.deptno AND job='Clerk';");
-         */
     }
 
     /**
      * Méthode privée qui initialise la liste des requetes de MAJ
      */
     private void remplirRequetesMaj() {
-        /*  // Requêtes d'insertion
-         maconnexion.ajouterRequeteMaj("INSERT INTO Dept (deptno,dname,loc) VALUES (50,'ECE','Paris');");
 
-         // Requêtes de modification
-         maconnexion.ajouterRequeteMaj("UPDATE Chambre SET no_chambre=110 WHERE no_chambre=101;");
-
-         // Requêtes de suppression
-         maconnexion.ajouterRequeteMaj("DELETE FROM Chambre WHERE no_chambre= 101 ;");
-         */
     }
 
     /**
@@ -525,9 +521,20 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             String passwdBDDString = new String(passwdBDDTexte.getPassword());
             try {
                 try {
+
                     // tentative de connexion si les 4 attributs sont remplis
                     maconnexion = new Connexion(nameECETexte.getText(), passwdECEString,
                             loginBDDTexte.getText(), passwdBDDString);
+                    setVisible(false);
+                    connecc = new JFrame("Connecté");
+                    connecc.pack();
+                    connecc.setDefaultLookAndFeelDecorated(true);
+                    connecc.setExtendedState(Fenetre.MAXIMIZED_BOTH);
+                    connecc.setVisible(true);
+                    connecc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    connecc.add("North", p1);
+                    connecc.add("Center", p2);
+                    connecc.add("South", p3);
 
                     // effacer les listes de tables et de requêtes
                     listeDeTables.removeAll();
@@ -572,7 +579,17 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 try {
                     // tentative de connexion si les 4 attributs sont remplis
                     maconnexion = new Connexion(nameBDDTexte.getText(), "root", "");
+                    setVisible(false);
+                    connecl = new JFrame("Connecté");
+                    connecl.pack();
+                    connecl.setDefaultLookAndFeelDecorated(true);
+                    connecl.setExtendedState(Fenetre.MAXIMIZED_BOTH);
+                    connecl.setVisible(true);
+                    connecl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+                    connecl.add("North", p1);
+                    connecl.add("Center", p2);
+                    connecl.add("South", p3);
                     // effacer les listes de tables et de requêtes
                     listeDeTables.removeAll();
                     listeDeRequetes.removeAll();
@@ -614,8 +631,8 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         }
         if (source == exec1) {
             voir = new JFrame("Rechercher");
+            voir.setResizable(false);
             voir.setSize(500, 200);
-            voir.setVisible(true);
             p4.setLayout(new GridLayout(5, 2));
             p4.add(Champ);
             p4.add(RequeteChamp);
@@ -629,12 +646,13 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             p4.add(RequeteC3);
             voir.add("Center", p4);
             voir.add("South", rechercher);
-
+            voir.setVisible(true);
             // effacer les résultats
             fenetreRes.removeAll();
         }
         if (source == exec2) {
             modif = new JFrame("Modifier");
+            modif.setResizable(false);
             modif.setSize(500, 200);
             modif.setVisible(true);
             p5.setLayout(new GridLayout(6, 2));
@@ -658,6 +676,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         }
         if (source == exec3) {
             suppr = new JFrame("Supprimer");
+            suppr.setResizable(false);
             suppr.setSize(500, 140);
             suppr.setVisible(true);
             p6.setLayout(new GridLayout(3, 2));
@@ -675,6 +694,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         }
         if (source == exec4) {
             ajout = new JFrame("Ajouter");
+            ajout.setResizable(false);
             ajout.setSize(500, 140);
             ajout.setVisible(true);
             p7.setLayout(new GridLayout(3, 2));
