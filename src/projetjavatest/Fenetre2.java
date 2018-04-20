@@ -34,7 +34,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     private final JLabel tab, req, res, lignes;
     private final JLabel nameECE, passwdECE, loginBDD, passwdBDD, nameBDD;
     private final JLabel vide1, vide2;
-    private final JOptionPane error1, error2;
+    private final JOptionPane error;
 
     // déclaration Swing fenetre pour Rechercher
     private final JLabel Champ, Table, C1, C2, C3, rang;
@@ -60,13 +60,15 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     private final JTextField nameECETexte, loginBDDTexte, nameBDDTexte;
     private final JPasswordField passwdECETexte, passwdBDDTexte;
     private final JButton connect, local;
-    private final JButton exec1, exec2, exec3, exec4, deco;
+    private final JButton exec1, exec2, exec3, exec4, deco, SQL;
     private final JButton rechercher, supprimer, ajouter, modifier;
     private final java.awt.List listeDeTables, listeDeRequetes;
     private final JTextArea fenetreLignes, fenetreRes;
-    private final JPanel p0, p1, nord, p2, p3;
+    private final JLabel nameSQL;
+    private final JPanel p0, p1, nord, p2, p3, p31, p32;
     private final JLayeredPane p01;
     private final JScrollBar scroll1, scroll2, scroll3, scroll4;
+    private final JTextField requeteSQL;
     // declaration de fenetre
     private JFrame c, connecc, connecl;
     // déclaration de fenetre permetant d'utiliser les fonctions rechercher, modifier, supprimer et ajouter
@@ -95,10 +97,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         exec3 = new JButton("Supprimer");
         exec4 = new JButton("Ajouter");
         deco = new JButton("Deconnection");
+        SQL = new JButton("Executer");
 
         //Creation messages erreur
-        error1 = new JOptionPane();
-        error2 = new JOptionPane();
+        error = new JOptionPane();
 
         // Boutons validant la requetes
         rechercher = new JButton("Recherche");
@@ -118,6 +120,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         nameBDDTexte = new JTextField();
         fenetreLignes = new JTextArea();
         fenetreRes = new JTextArea();
+        requeteSQL = new JTextField();
 
         //Texte pour Rechercher
         RequeteChamp = new JTextField(null);
@@ -157,7 +160,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         passwdBDD = new JLabel("password base :", JLabel.CENTER);
         nameBDD = new JLabel("           nom base :", JLabel.CENTER);
         vide2 = new JLabel("  ", JLabel.CENTER);
-
+        nameSQL = new JLabel("Entrez votre requete de sélection :", JLabel.CENTER);
         // creation des scrollbar
         scroll1 = new JScrollBar();
         scroll2 = new JScrollBar();
@@ -199,6 +202,8 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         nord = new JPanel();
         p2 = new JPanel();
         p3 = new JPanel();
+        p31 = new JPanel();
+        p32 = new JPanel();
         // Panel pour Rechercher
         p4 = new JPanel();
         // Panel pour Modifier
@@ -214,7 +219,9 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p1.setLayout(new GridLayout(1, 4));
         nord.setLayout(new BoxLayout(nord, BoxLayout.PAGE_AXIS));
         p2.setLayout(new GridLayout(1, 4));
-        p3.setLayout(new GridLayout(1, 4));
+        p3.setLayout(new GridLayout(2, 1));
+        p31.setLayout(new GridLayout(1, 5));
+        p32.setLayout(new GridLayout(1, 3));
 
         // ajout des objets graphqiues dans les panneaux
         p0.add(nameECE);
@@ -256,6 +263,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         exec3.addActionListener(this);
         exec4.addActionListener(this);
         deco.addActionListener(this);
+        SQL.addActionListener(this);
 
         // Ajouts des Listeners de confirmation
         rechercher.addActionListener(this);
@@ -282,12 +290,18 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p2.add(fenetreLignes);
         p2.add(fenetreRes);
         // ajout des objets graphique des requetes
-        p3.add(exec1);
-        p3.add(exec2);
-        p3.add(exec3);
-        p3.add(exec4);
-        p3.add(deco);
+        p31.add(exec1);
+        p31.add(exec2);
+        p31.add(exec3);
+        p31.add(exec4);
+        p31.add(deco);
+        // ajout de la requete sql manuel
+        p32.add(nameSQL);
+        p32.add(requeteSQL);
+        p32.add(SQL);
 
+        p3.add(p31);
+        p3.add(p32);
         // disposition geographique des panneaux
         this.setVisible(true);
 
@@ -589,10 +603,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 } catch (SQLException e) {
                     System.out.println("Connexion echouee : probleme SQL");
                     e.printStackTrace();
-                    error1.showMessageDialog(null, "Les informations saisies sont incorrect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                    error.showMessageDialog(null, "Les informations saisies sont incorrect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                error1.showMessageDialog(null, "Les informations saisies sont incorrect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                error.showMessageDialog(null, "Les informations saisies sont incorrect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
         } else if (source == local) {
             ArrayList<String> liste;
@@ -649,10 +663,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 } catch (SQLException e) {
                     System.out.println("Connexion echouee : probleme SQL");
                     e.printStackTrace();
-                    error2.showMessageDialog(null, "la base local est incorect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                    error.showMessageDialog(null, "la base local est incorect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                error2.showMessageDialog(null, "la base local est incorect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                error.showMessageDialog(null, "la base local est incorect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
         if (source == deco) {
@@ -767,6 +781,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 maconnexion.executeUpdate(requeteSelectionnee);
             } catch (SQLException ex) {
                 Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
+                error.showMessageDialog(null, "Requete modifier invalide", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
             modif.setVisible(false);
         }
@@ -777,6 +792,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 maconnexion.executeUpdate(requeteSelectionnee);
             } catch (SQLException ex) {
                 Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
+                error.showMessageDialog(null, "Requete supprimer invalide", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
             suppr.setVisible(false);
         }
@@ -787,8 +803,29 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 maconnexion.executeUpdate(requeteSelectionnee);
             } catch (SQLException ex) {
                 Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
+                error.showMessageDialog(null, "Requete ajouter inavalide", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
             ajout.setVisible(false);
+        }
+        if (source == SQL) {
+            String requeteSelectionnee = requeteSQL.getText(); // récupérer le texte de la requête
+
+            // effacer les résultats
+            fenetreRes.removeAll();
+
+            try {
+                // afficher les résultats de la requete selectionnee
+                if (afficherRes(requeteSelectionnee) != null) {
+                    maconnexion.ajouterRequete(requeteSelectionnee);
+                    maconnexion.ajouterRequeteMaj(requeteSelectionnee);
+                    listeDeRequetes.removeAll();
+                    afficherRequetes();
+                }
+
+            } catch (SQLException ex) {
+
+            }
+
         }
 
     }
