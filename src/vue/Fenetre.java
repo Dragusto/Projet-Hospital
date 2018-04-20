@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetjavatest;
+package vue;
 
 /*
  * 
@@ -16,6 +16,8 @@ import javax.swing.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import controleur.Connexion;
+import controleur.Connexion;
 
 /**
  *
