@@ -9,7 +9,6 @@ package vue;
  *
  * Test de la fenêtre
  */
-import vue.Fenetre;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.*;
@@ -558,7 +557,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                         connecc = new JFrame("Connecté");
                         connecc.pack();
                         connecc.setDefaultLookAndFeelDecorated(true);
-                        connecc.setExtendedState(Fenetre.MAXIMIZED_BOTH);
+                        connecc.setExtendedState(Fenetre2.MAXIMIZED_BOTH);
                         connecc.setVisible(true);
                         connecc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         connecc.add("North", p1);
@@ -617,7 +616,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                         connecl = new JFrame("Connecté");
                         connecl.pack();
                         connecl.setDefaultLookAndFeelDecorated(true);
-                        connecl.setExtendedState(Fenetre.MAXIMIZED_BOTH);
+                        connecl.setExtendedState(Fenetre2.MAXIMIZED_BOTH);
                         connecl.setVisible(true);
                         connecl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
