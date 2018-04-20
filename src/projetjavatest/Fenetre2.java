@@ -239,10 +239,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         lignes.setBackground(Color.MAGENTA);
         req.setBackground(Color.MAGENTA);
         res.setBackground(Color.MAGENTA);
-        listeDeTables.setBackground(Color.CYAN);
-        fenetreLignes.setBackground(Color.WHITE);
-        listeDeRequetes.setBackground(Color.GREEN);
-        fenetreRes.setBackground(Color.GREEN);
+        listeDeTables.setBackground(new Color(212,227,247));
+        fenetreLignes.setBackground(new Color(205,208,213));
+        listeDeRequetes.setBackground(new Color(212,227,247));
+        fenetreRes.setBackground(new Color(212,227,247));
         p1.setBackground(Color.LIGHT_GRAY);
 
         // disposition geographique des panneaux

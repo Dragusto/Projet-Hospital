@@ -138,13 +138,13 @@ public class Fenetre extends JFrame implements ActionListener, ItemListener {
         listeDeRequetes.addItemListener(this);
 
         // couleurs des objets graphiques
-        tab.setBackground(Color.MAGENTA);
-        lignes.setBackground(Color.MAGENTA);
-        req.setBackground(Color.MAGENTA);
-        res.setBackground(Color.MAGENTA);
-        listeDeTables.setBackground(Color.CYAN);
+        tab.setBackground(Color.GRAY);
+        lignes.setBackground(Color.GRAY);
+        req.setBackground(Color.GRAY);
+        res.setBackground(Color.GRAY);
+        listeDeTables.setBackground(Color.GRAY);
         fenetreLignes.setBackground(Color.WHITE);
-        listeDeRequetes.setBackground(Color.GREEN);
+        listeDeRequetes.setBackground(Color.GRAY);
         fenetreRes.setBackground(Color.WHITE);
         p1.setBackground(Color.LIGHT_GRAY);
 

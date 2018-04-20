@@ -84,7 +84,7 @@ public class SSHTunnel {
             //System.out.println("SSH connexion successful : localhost -> "+this.getFirstHost()+":"+this.getFirstHostPort()+" -> "+" "+port+":"+this.getSecondHost()+":"+this.getSecondHostPort());
             return true;
         } catch (JSchException e) {
-            System.out.println("ProblÃ¨me SSH");
+            System.out.println("Probleme SSH");
         }
 
         return false;
