@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetjavatest;
+package vue;
 
 /*
  *
  * Test de la fenêtre
  */
+import vue.Fenetre;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.*;
@@ -16,6 +17,8 @@ import javax.swing.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import controleur.Connexion;
+import controleur.Connexion;
 
 /**
  *
@@ -66,8 +69,8 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     private final JTextArea fenetreLignes, fenetreRes;
     private final JLabel nameSQL;
     private final JPanel p0, p1, nord, p2, p3, p31, p32;
+    private final JScrollPane p21, p22;
     private final JLayeredPane p01;
-    private final JScrollBar scroll1, scroll2, scroll3, scroll4;
     private final JTextField requeteSQL;
     // declaration de fenetre
     private JFrame c, connecc, connecl;
@@ -161,13 +164,6 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         nameBDD = new JLabel("           nom base :", JLabel.CENTER);
         vide2 = new JLabel("  ", JLabel.CENTER);
         nameSQL = new JLabel("Entrez votre requete de sélection :", JLabel.CENTER);
-        // creation des scrollbar
-        scroll1 = new JScrollBar();
-        scroll2 = new JScrollBar();
-        scroll3 = new JScrollBar();
-        scroll4 = new JScrollBar();
-
-        req.add(scroll1);
 
         // Label pour rechercher
         Champ = new JLabel("Champ :", JLabel.CENTER);
@@ -201,6 +197,8 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p1 = new JPanel();
         nord = new JPanel();
         p2 = new JPanel();
+        p21 = new JScrollPane(fenetreLignes);
+        p22 = new JScrollPane(fenetreRes);
         p3 = new JPanel();
         p31 = new JPanel();
         p32 = new JPanel();
@@ -218,7 +216,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p01.setLayout(new GridLayout(3, 2));
         p1.setLayout(new GridLayout(1, 4));
         nord.setLayout(new BoxLayout(nord, BoxLayout.PAGE_AXIS));
-        p2.setLayout(new GridLayout(1, 4));
+        p2.setLayout(new GridLayout(1, 3));
         p3.setLayout(new GridLayout(2, 1));
         p31.setLayout(new GridLayout(1, 5));
         p32.setLayout(new GridLayout(1, 3));
@@ -276,10 +274,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         lignes.setBackground(Color.MAGENTA);
         req.setBackground(Color.MAGENTA);
         res.setBackground(Color.MAGENTA);
-        listeDeTables.setBackground(new Color(212,227,247));
-        fenetreLignes.setBackground(new Color(205,208,213));
-        listeDeRequetes.setBackground(new Color(212,227,247));
-        fenetreRes.setBackground(new Color(212,227,247));
+        listeDeTables.setBackground(new Color(212, 227, 247));
+        fenetreLignes.setBackground(new Color(205, 208, 213));
+        listeDeRequetes.setBackground(new Color(212, 227, 247));
+        fenetreRes.setBackground(new Color(212, 227, 247));
         p1.setBackground(Color.LIGHT_GRAY);
 
         p1.add(tab);
@@ -287,8 +285,8 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p1.add(res);
 
         p2.add(listeDeTables);
-        p2.add(fenetreLignes);
-        p2.add(fenetreRes);
+        p2.add(p21);
+        p2.add(p22);
         // ajout des objets graphique des requetes
         p31.add(exec1);
         p31.add(exec2);

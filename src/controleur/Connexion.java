@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetjavatest;
+package controleur;
 
 /*
  *
@@ -10,6 +10,7 @@ package projetjavatest;
  */
 import java.sql.*;
 import java.util.ArrayList;
+import vue.*;
 
 /**
  *
@@ -55,6 +56,7 @@ public class Connexion {
         Class.forName("com.mysql.jdbc.Driver");
 
         // url de connexion "jdbc:mysql://localhost:3305/usernameECE"
+<<<<<<< HEAD:src/projetjavatest/Connexion.java
 
 
         String urlDatabase = "jdbc:mysql://localhost:3305/"+nameDatabase;
@@ -65,6 +67,9 @@ public class Connexion {
 
         //String urlDatabase = "jdbc:mysql://localhost/" + nameDatabase;
 
+=======
+        String urlDatabase = "jdbc:mysql://localhost/" + nameDatabase;
+>>>>>>> b3f73427544e6ded1e6ddabc7ac84fd3e62590b2:src/controleur/Connexion.java
 
         //crÃ©ation d'une connexion JDBC Ã  la base
         conn = DriverManager.getConnection(urlDatabase, loginDatabase, passwordDatabase);
@@ -95,6 +100,7 @@ public class Connexion {
             System.out.println("Connexion reussie");
 
             // url de connexion "jdbc:mysql://localhost:3305/usernameECE"
+<<<<<<< HEAD:src/projetjavatest/Connexion.java
 
             String urlDatabase = "jdbc:mysql://localhost:3305/" + usernameECE;
            //String urlDatabase = "jdbc:mysql://127.0.0.1:3305/" + usernameECE;
@@ -103,11 +109,12 @@ public class Connexion {
             //String urlDatabase = "jdbc:mysql://localhost:3305/" + usernameECE;
             
 
+=======
+            String urlDatabase = "jdbc:mysql://localhost:3305/" + usernameECE;
+>>>>>>> b3f73427544e6ded1e6ddabc7ac84fd3e62590b2:src/controleur/Connexion.java
 
             //crÃ©ation d'une connexion JDBC Ã  la base
-            //conn = DriverManager.getConnection(urlDatabase, loginDatabase, passwordDatabase);
-            //conn = DriverManager.getConnection("jdbc:mysql://localhost:3305/hopital","root","root");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3305/?" + "user=root&password=root");
+            conn = DriverManager.getConnection(urlDatabase, loginDatabase, passwordDatabase);
 
             // crÃ©ation d'un ordre SQL (statement)
             stmt = conn.createStatement();
