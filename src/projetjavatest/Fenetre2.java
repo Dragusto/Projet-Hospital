@@ -6,7 +6,7 @@
 package projetjavatest;
 
 /*
- * 
+ *
  * Test de la fenêtre
  */
 import java.awt.event.*;
@@ -27,35 +27,42 @@ import java.util.logging.Logger;
 public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     /*
      * Attribut privés : objets de Connexion, AWT et Swing
-     * 
+     *
      */
+
     private Connexion maconnexion;
     private final JLabel tab, req, res, lignes;
     private final JLabel nameECE, passwdECE, loginBDD, passwdBDD, nameBDD;
-    // déclaration swing pour Rechercher
+
+    // déclaration Swing fenetre pour Rechercher
     private final JLabel Champ, Table, C1, C2, C3, rang;
     private final JTextField RequeteChamp, RequeteTable, RequeteC1, RequeteC2, RequeteC3, Requeterang;
-    // Declaration swing pour Modifier
-    private final JLabel M1,M2,M3,MC1,MC2,MCT;
-    private final JTextField ModTable, Mod1, Mod2, Mod3, ModC1,ModC2;
-    // Declaration swing Supprimer
-    private final JLabel DT,DC1,DC2;
-    private final JTextField DelT,DelC1,DelC2;
-    // Declaration swing Ajouter
-    private final JLabel IT,IC,IV;
-    private final JTextField InTa,InC,InV;
-     
-    //Déclaration Swing Fenêtre principale 
+
+    // Declaration Swing fenetre pour Modifier
+    private final JLabel M1, M2, M3, MC1, MC2, MCT;
+    private final JTextField ModTable, Mod1, Mod2, Mod3, ModC1, ModC2;
+
+    // Declaration Swing fenetre Supprimer
+    private final JLabel DT, DC1, DC2;
+    private final JTextField DelT, DelC1, DelC2;
+
+    // Declaration Swing fenetre Ajouter
+    private final JLabel IT, IC, IV;
+    private final JTextField InTa, InC, InV;
+
+    //Déclaration Swing Fenêtre principale
     private final JTextField nameECETexte, loginBDDTexte, nameBDDTexte;
     private final JPasswordField passwdECETexte, passwdBDDTexte;
     private final JButton connect, local;
-    private final JButton exec1,exec2, exec3, exec4;
-    private final JButton rechercher,supprimer, ajouter, modifier;
+    private final JButton exec1, exec2, exec3, exec4;
+    private final JButton rechercher, supprimer, ajouter, modifier;
     private final java.awt.List listeDeTables, listeDeRequetes;
     private final JTextArea fenetreLignes, fenetreRes;
     private final JPanel p0, p1, nord, p2, p3, p4, p5, p6, p7;
+    private final JScrollBar scroll1, scroll2, scroll3, scroll4;
     // déclaration de fenetre permetant d'utiliser les fonctions rechercher, modifier, supprimer et ajouter
     private JFrame voir, modif, suppr, ajout;
+
     /**
      * Constructeur qui initialise tous les objets graphiques de la fenetre
      */
@@ -73,19 +80,19 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         // creation des boutons
         connect = new JButton("Connexion ECE");
         local = new JButton("Connexion locale");
-       
+
         // Boutons selection choix
         exec1 = new JButton("Rechercher");
         exec2 = new JButton("Modifier");
         exec3 = new JButton("Supprimer");
         exec4 = new JButton("Ajouter");
-        
+
         // Boutons validant la requetes
         rechercher = new JButton("Recherche");
         ajouter = new JButton("Ajouter");
         supprimer = new JButton("Supprimer");
         modifier = new JButton("Modifier");
-        
+
         // creation des listes pour les tables et les requetes
         listeDeTables = new java.awt.List(10, false);
         listeDeRequetes = new java.awt.List(10, false);
@@ -98,15 +105,15 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         nameBDDTexte = new JTextField();
         fenetreLignes = new JTextArea();
         fenetreRes = new JTextArea();
-        
-        //Texte pour Rechercher 
+
+        //Texte pour Rechercher
         RequeteChamp = new JTextField(null);
         RequeteTable = new JTextField(null);
         RequeteC1 = new JTextField(null);
         RequeteC2 = new JTextField(null);
         RequeteC3 = new JTextField(null);
         Requeterang = new JTextField(null);
-        
+
         // Texte pour modifier
         ModTable = new JTextField(null);
         Mod1 = new JTextField(null);
@@ -114,7 +121,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         Mod3 = new JTextField(null);
         ModC1 = new JTextField(null);
         ModC2 = new JTextField(null);
-        
+
         // texte pour supprimer
         DelT = new JTextField(null);
         DelC1 = new JTextField(null);
@@ -124,7 +131,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         InTa = new JTextField(null);
         InC = new JTextField(null);
         InV = new JTextField(null);
-        
+
         // creation des labels
         tab = new JLabel("Tables", JLabel.CENTER);
         lignes = new JLabel("Lignes", JLabel.CENTER);
@@ -135,7 +142,15 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         loginBDD = new JLabel("login base :", JLabel.CENTER);
         passwdBDD = new JLabel("password base :", JLabel.CENTER);
         nameBDD = new JLabel("nom base :", JLabel.CENTER);
-        
+
+        // creation des scrollbar
+        scroll1 = new JScrollBar();
+        scroll2 = new JScrollBar();
+        scroll3 = new JScrollBar();
+        scroll4 = new JScrollBar();
+
+        req.add(scroll1);
+
         // Label pour rechercher
         Champ = new JLabel("Champ :", JLabel.CENTER);
         Table = new JLabel("Table :", JLabel.CENTER);
@@ -143,25 +158,25 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         C2 = new JLabel("Condition :", JLabel.CENTER);
         C3 = new JLabel("Condition :", JLabel.CENTER);
         rang = new JLabel("Rang : ", JLabel.CENTER);
-        
+
         // Label pour modifier
         MCT = new JLabel("Table :", JLabel.CENTER);
         MC1 = new JLabel("Condition :", JLabel.CENTER);
         MC2 = new JLabel("Condition :", JLabel.CENTER);
-        M1= new  JLabel("Modification :", JLabel.CENTER);
-        M2= new  JLabel("Modification :", JLabel.CENTER);
-        M3= new  JLabel("Modification :", JLabel.CENTER);
-        
+        M1 = new JLabel("Modification :", JLabel.CENTER);
+        M2 = new JLabel("Modification :", JLabel.CENTER);
+        M3 = new JLabel("Modification :", JLabel.CENTER);
+
         // Label pour supprimer
         DT = new JLabel("Table :", JLabel.CENTER);
         DC1 = new JLabel("Condition :", JLabel.CENTER);
         DC2 = new JLabel("Condition :", JLabel.CENTER);
-        
+
         // label pour ajouter
         IT = new JLabel("Table :", JLabel.CENTER);
-        IC= new  JLabel("Champs :", JLabel.CENTER);
-        IV= new  JLabel("Valeurs :", JLabel.CENTER);
-        
+        IC = new JLabel("Champs :", JLabel.CENTER);
+        IV = new JLabel("Valeurs :", JLabel.CENTER);
+
         // creation des panneaux
         p0 = new JPanel();
         p1 = new JPanel();
@@ -176,15 +191,14 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p6 = new JPanel();
         // panel pour Ajouter
         p7 = new JPanel();
-        
-        
+
         // mise en page des panneaux
         p0.setLayout(new GridLayout(1, 11));
         p1.setLayout(new GridLayout(1, 4));
         nord.setLayout(new GridLayout(2, 1));
         p2.setLayout(new GridLayout(1, 4));
         p3.setLayout(new GridLayout(1, 4));
-            
+
         // ajout des objets graphqiues dans les panneaux
         p0.add(nameECE);
         p0.add(nameECETexte);
@@ -206,12 +220,12 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p2.add(listeDeTables);
         p2.add(fenetreLignes);
         p2.add(fenetreRes);
-       // ajout des objets graphique des requetes
+        // ajout des objets graphique des requetes
         p3.add(exec1);
         p3.add(exec2);
         p3.add(exec3);
         p3.add(exec4);
-        
+
         // ajout des listeners
         connect.addActionListener(this);
         local.addActionListener(this);
@@ -227,13 +241,13 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         exec2.addActionListener(this);
         exec3.addActionListener(this);
         exec4.addActionListener(this);
-        
+
         // Ajouts des Listeners de confirmation
         rechercher.addActionListener(this);
         modifier.addActionListener(this);
         supprimer.addActionListener(this);
         ajouter.addActionListener(this);
-        
+
         // couleurs des objets graphiques
         tab.setBackground(Color.MAGENTA);
         lignes.setBackground(Color.MAGENTA);
@@ -250,7 +264,6 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         add("Center", p2);
         add("South", p3);
 
-
         // pour fermer la fenetre
         addWindowListener(new WindowAdapter() {
             @Override
@@ -259,10 +272,6 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             }
         });
     }
-    
-
-
-
 
     /**
      * Méthode privée qui initialise la liste des tables
@@ -282,28 +291,29 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
      * Méthode privée qui initialise la liste des requetes de selection KI
      */
     private void remplirRequetes() {
-       /* maconnexion.ajouterRequete("SELECT code_service FROM chambre;");
-        maconnexion.ajouterRequete("SELECT no_chambre FROM chambre;");
-        maconnexion.ajouterRequete("SELECT AVG (Emp.sal) FROM Emp, Mission WHERE Emp.empno = Mission.empno;");
-        maconnexion.ajouterRequete("SELECT Dept.*, Emp.* FROM Dept, Emp WHERE Dept.deptno=Emp.deptno AND comm>0;");
-        maconnexion.ajouterRequete("SELECT hiredate, empno, ename FROM Emp WHERE (((hiredate)>='1981-05-01' And (hiredate)<'1981-05-31'))ORDER BY hiredate;");
-        maconnexion.ajouterRequete("SELECT ename, job FROM Emp ORDER BY job;");
-        maconnexion.ajouterRequete("SELECT DISTINCT dname, job FROM Dept, Emp WHERE Dept.deptno=Emp.deptno AND job='Clerk';");
-    */}
+        /* maconnexion.ajouterRequete("SELECT code_service FROM chambre;");
+         maconnexion.ajouterRequete("SELECT no_chambre FROM chambre;");
+         maconnexion.ajouterRequete("SELECT AVG (Emp.sal) FROM Emp, Mission WHERE Emp.empno = Mission.empno;");
+         maconnexion.ajouterRequete("SELECT Dept.*, Emp.* FROM Dept, Emp WHERE Dept.deptno=Emp.deptno AND comm>0;");
+         maconnexion.ajouterRequete("SELECT hiredate, empno, ename FROM Emp WHERE (((hiredate)>='1981-05-01' And (hiredate)<'1981-05-31'))ORDER BY hiredate;");
+         maconnexion.ajouterRequete("SELECT ename, job FROM Emp ORDER BY job;");
+         maconnexion.ajouterRequete("SELECT DISTINCT dname, job FROM Dept, Emp WHERE Dept.deptno=Emp.deptno AND job='Clerk';");
+         */
+    }
 
     /**
      * Méthode privée qui initialise la liste des requetes de MAJ
      */
     private void remplirRequetesMaj() {
-      /*  // Requêtes d'insertion
-        maconnexion.ajouterRequeteMaj("INSERT INTO Dept (deptno,dname,loc) VALUES (50,'ECE','Paris');");
+        /*  // Requêtes d'insertion
+         maconnexion.ajouterRequeteMaj("INSERT INTO Dept (deptno,dname,loc) VALUES (50,'ECE','Paris');");
 
-        // Requêtes de modification
-        maconnexion.ajouterRequeteMaj("UPDATE Chambre SET no_chambre=110 WHERE no_chambre=101;");
+         // Requêtes de modification
+         maconnexion.ajouterRequeteMaj("UPDATE Chambre SET no_chambre=110 WHERE no_chambre=101;");
 
-        // Requêtes de suppression
-        maconnexion.ajouterRequeteMaj("DELETE FROM Chambre WHERE no_chambre= 101 ;");
-*/
+         // Requêtes de suppression
+         maconnexion.ajouterRequeteMaj("DELETE FROM Chambre WHERE no_chambre= 101 ;");
+         */
     }
 
     /**
@@ -330,7 +340,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             // recupérér les résultats de la table selectionnee
             liste = maconnexion.remplirChampsTable(nomTable);
 
-            // afficher les champs de la table selectionnee 
+            // afficher les champs de la table selectionnee
             fenetreLignes.setText("");
             for (String liste1 : liste) {
                 fenetreLignes.append(liste1);
@@ -354,137 +364,103 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         }
     }
 
-    
-    public String rechercher()
-    {
+    public String rechercher() {
         // récupérer le texte de la requête
-                String requetechamp = RequeteChamp.getText() ;
-                String requetetable = RequeteTable.getText();
-                String requetec1 = RequeteC1.getText();
-                String requetec2 = RequeteC2.getText();
-                String requetec3 = RequeteC3.getText();
-                String requeterand = Requeterang.getText();
-                String requeteSelectionnee = null;
-                // effacer les résultats
-                fenetreRes.removeAll();
-                if (!"".equals(requetechamp) )
-                {
-                requeteSelectionnee ="SELECT " + requetechamp;
-                }
-                if (!"".equals(requetetable))
-                {
-                requeteSelectionnee = requeteSelectionnee + " FROM " + requetetable ;
-                }
-                if (!"".equals(requetec1))
-                {
-                requeteSelectionnee = requeteSelectionnee + " WHERE " +requetec1;
-                if (!"".equals(requetec2))
-                {
+        String requetechamp = RequeteChamp.getText();
+        String requetetable = RequeteTable.getText();
+        String requetec1 = RequeteC1.getText();
+        String requetec2 = RequeteC2.getText();
+        String requetec3 = RequeteC3.getText();
+        String requeterand = Requeterang.getText();
+        String requeteSelectionnee = null;
+        // effacer les résultats
+        fenetreRes.removeAll();
+        if (!"".equals(requetechamp)) {
+            requeteSelectionnee = "SELECT " + requetechamp;
+        }
+        if (!"".equals(requetetable)) {
+            requeteSelectionnee = requeteSelectionnee + " FROM " + requetetable;
+        }
+        if (!"".equals(requetec1)) {
+            requeteSelectionnee = requeteSelectionnee + " WHERE " + requetec1;
+            if (!"".equals(requetec2)) {
                 requeteSelectionnee = requeteSelectionnee + " AND " + requetec2;
-                if (!"".equals(requetec3))
-                {
-                requeteSelectionnee = requeteSelectionnee + " AND " + requetec3 + ";";
+                if (!"".equals(requetec3)) {
+                    requeteSelectionnee = requeteSelectionnee + " AND " + requetec3;
                 }
-                else
-                {
-                requeteSelectionnee = requeteSelectionnee + ";";
-                }
-                }
-                else
-                {
-                requeteSelectionnee = requeteSelectionnee + ";";
-                }
-                }
-                else
-                {
-                requeteSelectionnee = requeteSelectionnee + ";";
-                }
-                
-                System.out.println("champ= " + requetechamp);
-                System.out.println("table = " + requetetable);
-                System.out.println("c1 = " + requetec1);
-                System.out.println("c2 = " + requetec2);
-                System.out.println("c3 = " + requetec3);
-                System.out.println(requeteSelectionnee);
-                return(requeteSelectionnee);
+            }
+        }
+        requeteSelectionnee = requeteSelectionnee + ";";
+        return (requeteSelectionnee);
     }
 
-    public String modifier()
-    {
+    public String modifier() {
         // récupérer le texte de la requête
-                String Modtable = ModTable.getText();
-                String Modc1 = ModC1.getText();
-                String Modc2 = ModC2.getText();
-                String mod1 = Mod1.getText();
-                String mod2 = Mod2.getText();
-                String mod3 = Mod3.getText();
-                String requeteSelectionnee = null;
-                // effacer les résultats
-                fenetreRes.removeAll();
-                if (!"".equals(ModTable) )
-                {
-                    requeteSelectionnee = "UPDATE " + Modtable;
+        String Modtable = ModTable.getText();
+        String Modc1 = ModC1.getText();
+        String Modc2 = ModC2.getText();
+        String mod1 = Mod1.getText();
+        String mod2 = Mod2.getText();
+        String mod3 = Mod3.getText();
+        String requeteSelectionnee = null;
+        // effacer les résultats
+        fenetreRes.removeAll();
+        if (!"".equals(ModTable)) {
+            requeteSelectionnee = "UPDATE " + Modtable;
+        }
+        if (!"".equals(mod1)) {
+            requeteSelectionnee = requeteSelectionnee + " SET " + mod1;
+            if (!"".equals(mod2)) {
+                requeteSelectionnee = requeteSelectionnee + ", " + mod2;
+                if (!"".equals(mod3)) {
+                    requeteSelectionnee = requeteSelectionnee + ", " + mod3;
                 }
-                if (!"".equals(mod1))
-                {
-                    requeteSelectionnee = requeteSelectionnee + " SET " + mod1 ;
-                    if (!"".equals(mod2))
-                    {
-                        requeteSelectionnee = requeteSelectionnee + ", " +mod2;
-                        if (!"".equals(mod3))
-                        {
-                            requeteSelectionnee = requeteSelectionnee + ", " + mod3;
-                        }
-                    }
-                    if (!"".equals(Modc1))
-                    {
-                        requeteSelectionnee = requeteSelectionnee + " WHERE " + Modc1;
-                        if(!"".equals(Modc2))
-                        {
-                            requeteSelectionnee = requeteSelectionnee + " AND " + Modc1;
-                        }
-                    }
+            }
+            if (!"".equals(Modc1)) {
+                requeteSelectionnee = requeteSelectionnee + " WHERE " + Modc1;
+                if (!"".equals(Modc2)) {
+                    requeteSelectionnee = requeteSelectionnee + " AND " + Modc1;
                 }
-                requeteSelectionnee = requeteSelectionnee + " ;";
-                System.out.println(requeteSelectionnee);
-                return requeteSelectionnee;
+            }
+        }
+        requeteSelectionnee = requeteSelectionnee + " ;";
+        System.out.println(requeteSelectionnee);
+        return requeteSelectionnee;
     }
-    
-    public String supprimer(){
-          // récupérer le texte de la requête
-                String delt = DelT.getText();
-                String delc1 = DelC1.getText();
-                String delc2 = DelC2.getText();
-                String requeteSelectionnee = null;
-                // effacer les résultats
-                fenetreRes.removeAll();
-                requeteSelectionnee = "DELETE FROM " + delt;
-                if (!"".equals(delc1))
-                {
-                    requeteSelectionnee = requeteSelectionnee + " WHERE " + delc1;
-                    if(!"".equals(delc2))
-                    {
-                        requeteSelectionnee = requeteSelectionnee + " AND " + delc2;
-                    }
-                }
-                requeteSelectionnee = requeteSelectionnee + " ;";
-                System.out.println(requeteSelectionnee);
-                return requeteSelectionnee;
+
+    public String supprimer() {
+        // récupérer le texte de la requête
+        String delt = DelT.getText();
+        String delc1 = DelC1.getText();
+        String delc2 = DelC2.getText();
+        String requeteSelectionnee = null;
+        // effacer les résultats
+        fenetreRes.removeAll();
+        requeteSelectionnee = "DELETE FROM " + delt;
+        if (!"".equals(delc1)) {
+            requeteSelectionnee = requeteSelectionnee + " WHERE " + delc1;
+            if (!"".equals(delc2)) {
+                requeteSelectionnee = requeteSelectionnee + " AND " + delc2;
+            }
+        }
+        requeteSelectionnee = requeteSelectionnee + " ;";
+        System.out.println(requeteSelectionnee);
+        return requeteSelectionnee;
     }
-    
-    public String ajouter()
-    {
-       // récupérer le texte de la requête
-                String inta = InTa.getText();
-                String inc = InC.getText();
-                String inv = InV.getText();
-                String requeteSelectionnee = null;
-                // effacer les résultats
-                fenetreRes.removeAll();
-                requeteSelectionnee = "INSERT INTO " + inta + "(" + inc + ") VALUES(" + inv + ");"; 
-                System.out.println(requeteSelectionnee);
-                return requeteSelectionnee;
+
+    public String ajouter() {
+        // récupérer le texte de la requête
+        String inta = InTa.getText();
+        String inc = InC.getText();
+        String inv = InV.getText();
+        String requeteSelectionnee = null;
+        // effacer les résultats
+        fenetreRes.removeAll();
+        requeteSelectionnee = "INSERT INTO " + inta + "(" + inc + ") VALUES(" + inv + ");";
+        System.out.println(requeteSelectionnee);
+        return requeteSelectionnee;
     }
+
     /**
      *
      * Afficher les requetes de selection et de MAJ dans la fenetre
@@ -494,8 +470,8 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             listeDeRequetes.add(requete);
         }
     }
-    
-     public void afficherRequetesMaj() {
+
+    public void afficherRequetesMaj() {
         for (String requete : maconnexion.requetesMaj) {
             listeDeRequetes.add(requete);
         }
@@ -541,7 +517,6 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     @SuppressWarnings("CallToThreadDumpStack")
     public void actionPerformed(ActionEvent evt) {
         Object source = evt.getSource();
-        Object source2 = evt.getSource();
 
         // tester cas de la commande evenementielle
         if (source == connect) {
@@ -627,7 +602,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
 
                     // afficher les résultats de la requete selectionnee
                     afficherRes(requeteSelectionnee);
-                   
+
                 } catch (ClassNotFoundException cnfe) {
                     System.out.println("Connexion echouee : probleme de classe");
                     cnfe.printStackTrace();
@@ -636,12 +611,12 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 System.out.println("Connexion echouee : probleme SQL");
                 e.printStackTrace();
             }
-        }  
+        }
         if (source == exec1) {
             voir = new JFrame("Rechercher");
             voir.setSize(500, 200);
             voir.setVisible(true);
-            p4.setLayout(new GridLayout(5,2));
+            p4.setLayout(new GridLayout(5, 2));
             p4.add(Champ);
             p4.add(RequeteChamp);
             p4.add(Table);
@@ -652,17 +627,17 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             p4.add(RequeteC2);
             p4.add(C3);
             p4.add(RequeteC3);
-            voir.add("Center",p4);
-            voir.add("South",rechercher);
+            voir.add("Center", p4);
+            voir.add("South", rechercher);
 
             // effacer les résultats
             fenetreRes.removeAll();
         }
         if (source == exec2) {
             modif = new JFrame("Modifier");
-            modif.setSize(600, 200);
+            modif.setSize(500, 200);
             modif.setVisible(true);
-            p5.setLayout(new GridLayout(6,2));
+            p5.setLayout(new GridLayout(6, 2));
             p5.add(MCT);
             p5.add(ModTable);
             p5.add(M1);
@@ -675,17 +650,17 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             p5.add(ModC1);
             p5.add(MC2);
             p5.add(ModC2);
-            modif.add("Center",p5);
-            modif.add("South",modifier);
+            modif.add("Center", p5);
+            modif.add("South", modifier);
             // effacer les résultats
             fenetreRes.removeAll();
-        
+
         }
         if (source == exec3) {
             suppr = new JFrame("Supprimer");
-            suppr.setSize(300, 200);
+            suppr.setSize(500, 140);
             suppr.setVisible(true);
-            p6.setLayout(new GridLayout(3,2));
+            p6.setLayout(new GridLayout(3, 2));
             p6.add(DT);
             p6.add(DelT);
             p6.add(DC1);
@@ -700,9 +675,9 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         }
         if (source == exec4) {
             ajout = new JFrame("Ajouter");
-            ajout.setSize(300, 200);
+            ajout.setSize(500, 140);
             ajout.setVisible(true);
-            p7.setLayout(new GridLayout(3,2));
+            p7.setLayout(new GridLayout(3, 2));
             p7.add(IT);
             p7.add(InTa);
             p7.add(IC);
@@ -715,58 +690,53 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             // effacer les résultats
             fenetreRes.removeAll();
         }
-        
-                if ( source2 == rechercher)
-                {
-                    String requeteSelectionnee;
-                    requeteSelectionnee = rechercher();
-                    try {
-                        // afficher les résultats de la requete selectionnee
-                        if (afficherRes(requeteSelectionnee) != null) 
-                        {
-                            maconnexion.ajouterRequete(requeteSelectionnee);
-                            listeDeRequetes.removeAll();
-                            afficherRequetes();
-                        }
-                    } catch (SQLException ex) {
-                
-                    }
-                    voir.setVisible(false);
+
+        if (source == rechercher) {
+            String requeteSelectionnee;
+            requeteSelectionnee = rechercher();
+            try {
+                // afficher les résultats de la requete selectionnee
+                if (afficherRes(requeteSelectionnee) != null) {
+                    maconnexion.ajouterRequete(requeteSelectionnee);
+                    listeDeRequetes.removeAll();
+                    afficherRequetes();
                 }
-                if ( source2 == modifier)
-                {
-                    String requeteSelectionnee;
-                    requeteSelectionnee = modifier();
-                    try {
-                            maconnexion.executeUpdate(requeteSelectionnee);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    modif.setVisible(false);
-                }
-                if ( source2 == supprimer)
-                {
-                    String requeteSelectionnee;
-                    requeteSelectionnee = supprimer();
-                    try {
-                            maconnexion.executeUpdate(requeteSelectionnee);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    suppr.setVisible(false);
-                }
-                if ( source2 == ajouter)
-                {
-                    String requeteSelectionnee;
-                    requeteSelectionnee = ajouter();
-                    try {
-                            maconnexion.executeUpdate(requeteSelectionnee);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    ajout.setVisible(false);
-                }
-               
+            } catch (SQLException ex) {
+
+            }
+            voir.setVisible(false);
+        }
+        if (source == modifier) {
+            String requeteSelectionnee;
+            requeteSelectionnee = modifier();
+            try {
+                maconnexion.executeUpdate(requeteSelectionnee);
+            } catch (SQLException ex) {
+                Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            modif.setVisible(false);
+        }
+        if (source == supprimer) {
+            String requeteSelectionnee;
+            requeteSelectionnee = supprimer();
+            try {
+                maconnexion.executeUpdate(requeteSelectionnee);
+            } catch (SQLException ex) {
+                Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            suppr.setVisible(false);
+        }
+        if (source == ajouter) {
+            String requeteSelectionnee;
+            requeteSelectionnee = ajouter();
+            try {
+                maconnexion.executeUpdate(requeteSelectionnee);
+            } catch (SQLException ex) {
+                Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ajout.setVisible(false);
+        }
+
     }
 
     /**
@@ -793,4 +763,3 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         }
     }
 }
-
