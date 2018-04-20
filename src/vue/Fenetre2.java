@@ -39,10 +39,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     private final JOptionPane error;
 
     // déclaration Swing fenetre pour Rechercher
-    private final JLabel Champ, Table, C1, C2, C3, rang, Table2, JC1, JC2, MOY, COUNT, GROUP,SUM;
+    private final JLabel Champ, Table, C1, C2, C3, rang, Table2, JC1, JC2, MOY, COUNT, GROUP, SUM;
     private final JTextField RequeteChamp, RequeteTable, RequeteC1, RequeteC2, RequeteC3;
-    private final JTextField Requeterang, RequeteTable2,JointC1,JointC2,Groupement;
-    private final JCheckBox Moyenne, Count,Somme;
+    private final JTextField Requeterang, RequeteTable2, JointC1, JointC2, Groupement;
+    private final JCheckBox Moyenne, Count, Somme;
     private final JPanel p4;
 
     // Declaration Swing fenetre pour Modifier
@@ -141,7 +141,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         Moyenne = new JCheckBox();
         Count = new JCheckBox();
         Somme = new JCheckBox();
-        
+
         // Texte pour modifier
         ModTable = new JTextField(null);
         Mod1 = new JTextField(null);
@@ -420,60 +420,49 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         String requeteSelectionnee = null;
         // effacer les résultats
         fenetreRes.removeAll();
-        if (!"".equals(requetechamp)) 
-        {
-            if(moy == true && ct ==false && sum==false && !"".equals(group) )
-            {
-                requeteSelectionnee = "SELECT "+ group +",AVG(" + requetechamp + ") ";
-            }
-            else if(ct == true && !"".equals(group))
-            {
-                requeteSelectionnee = "SELECT "+ group +",COUNT(" + requetechamp + ") ";
-            }
-            else if(sum == true && ct ==false && moy==false && "".equals(group) )
-            {
-                requeteSelectionnee = "SELECT "+ group +"SUM(" + requetechamp + ") ";
-            }
-            else if(sum == true && ct ==false && moy==false && !"".equals(group))
-            {
-                requeteSelectionnee = "SELECT "+ group +",SUM(" + requetechamp + ") ";
-            }
-            else if(moy == true && ct ==false && sum==false && "".equals(group) )
-            {
-                requeteSelectionnee = "SELECT "+ group +"AVG(" + requetechamp + ") ";
-            }
-            else if(ct == true && moy ==false && sum==false &&  "".equals(group))
-            {
-                requeteSelectionnee = "SELECT "+ group +"COUNT(" + requetechamp + ") ";
-            }
-            else if(ct ==false && moy == false && sum == false)
-            {
+        if (!"".equals(requetechamp) || (moy == true && ct == true) || (moy == true && sum == true) || (ct == true && sum == true)) {
+            if (moy == true && ct == false && sum == false && !"".equals(group)) {
+                requeteSelectionnee = "SELECT " + group + ",AVG(" + requetechamp + ") ";
+
+            } else if (ct == true && !"".equals(group)) {
+                requeteSelectionnee = "SELECT " + group + ",COUNT(" + requetechamp + ") ";
+
+            } else if (sum == true && ct == false && moy == false && "".equals(group)) {
+                requeteSelectionnee = "SELECT " + group + "SUM(" + requetechamp + ") ";
+
+            } else if (sum == true && ct == false && moy == false && !"".equals(group)) {
+                requeteSelectionnee = "SELECT " + group + ",SUM(" + requetechamp + ") ";
+
+            } else if (moy == true && ct == false && sum == false && "".equals(group)) {
+                requeteSelectionnee = "SELECT " + group + "AVG(" + requetechamp + ") ";
+
+            } else if (ct == true && moy == false && sum == false && "".equals(group)) {
+                requeteSelectionnee = "SELECT " + group + "COUNT(" + requetechamp + ") ";
+
+            } else if (ct == false && moy == false && sum == false) {
                 requeteSelectionnee = "SELECT " + requetechamp;
+
+            } else {
+                error.showMessageDialog(null, "Impossible de faire cete requete", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
-        if (!"".equals(requetetable)) 
-        {
+        if (!"".equals(requetetable)) {
             requeteSelectionnee = requeteSelectionnee + " FROM " + requetetable;
-           if (!"".equals(requetetable2))
-           {
-               requeteSelectionnee = requeteSelectionnee + " INNER JOIN " + requetetable2 + " ON " + requetetable + "." + jointc1 + " = " + requetetable2 +"."+ jointc2; ;
-           }
+            if (!"".equals(requetetable2)) {
+                requeteSelectionnee = requeteSelectionnee + " INNER JOIN " + requetetable2 + " ON " + requetetable + "." + jointc1 + " = " + requetetable2 + "." + jointc2;;
+            }
         }
-        if (!"".equals(requetec1)) 
-        {
+        if (!"".equals(requetec1)) {
             requeteSelectionnee = requeteSelectionnee + " WHERE " + requetec1;
-            if (!"".equals(requetec2)) 
-            {
+            if (!"".equals(requetec2)) {
                 requeteSelectionnee = requeteSelectionnee + " AND " + requetec2;
-                if (!"".equals(requetec3)) 
-                {
+                if (!"".equals(requetec3)) {
                     requeteSelectionnee = requeteSelectionnee + " AND " + requetec3;
                 }
             }
         }
-        
-        if (!"".equals(group))
-        {
+
+        if (!"".equals(group)) {
             requeteSelectionnee = requeteSelectionnee + " GROUP BY " + group;
         }
         requeteSelectionnee = requeteSelectionnee + ";";
@@ -740,7 +729,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             connecl.removeNotify();
         }
         if (source == exec1) {
-             voir = new JFrame("Rechercher");
+            voir = new JFrame("Rechercher");
             voir.setResizable(false);
             voir.setSize(1000, 210);
             p4.setLayout(new GridLayout(6, 2));
