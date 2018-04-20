@@ -10,7 +10,7 @@ package controleur;
  */
 import java.sql.*;
 import java.util.ArrayList;
-import vue.*;
+import modele.SSHTunnel;
 
 /**
  *
@@ -56,20 +56,7 @@ public class Connexion {
         Class.forName("com.mysql.jdbc.Driver");
 
         // url de connexion "jdbc:mysql://localhost:3305/usernameECE"
-<<<<<<< HEAD:src/projetjavatest/Connexion.java
-
-
-        String urlDatabase = "jdbc:mysql://localhost:3305/"+nameDatabase;
-        
-        
-        
-;
-
-        //String urlDatabase = "jdbc:mysql://localhost/" + nameDatabase;
-
-=======
         String urlDatabase = "jdbc:mysql://localhost/" + nameDatabase;
->>>>>>> b3f73427544e6ded1e6ddabc7ac84fd3e62590b2:src/controleur/Connexion.java
 
         //crÃ©ation d'une connexion JDBC Ã  la base
         conn = DriverManager.getConnection(urlDatabase, loginDatabase, passwordDatabase);
@@ -100,18 +87,7 @@ public class Connexion {
             System.out.println("Connexion reussie");
 
             // url de connexion "jdbc:mysql://localhost:3305/usernameECE"
-<<<<<<< HEAD:src/projetjavatest/Connexion.java
-
             String urlDatabase = "jdbc:mysql://localhost:3305/" + usernameECE;
-           //String urlDatabase = "jdbc:mysql://127.0.0.1:3305/" + usernameECE;
-         
-
-            //String urlDatabase = "jdbc:mysql://localhost:3305/" + usernameECE;
-            
-
-=======
-            String urlDatabase = "jdbc:mysql://localhost:3305/" + usernameECE;
->>>>>>> b3f73427544e6ded1e6ddabc7ac84fd3e62590b2:src/controleur/Connexion.java
 
             //crÃ©ation d'une connexion JDBC Ã  la base
             conn = DriverManager.getConnection(urlDatabase, loginDatabase, passwordDatabase);

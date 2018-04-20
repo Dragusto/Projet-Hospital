@@ -16,7 +16,7 @@ import javax.swing.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import controleur.Connexion;
+import controleur.*;
 import controleur.Connexion;
 
 /**
