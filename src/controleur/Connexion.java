@@ -8,6 +8,7 @@ package controleur;
  *
  * Librairies importÃ©es
  */
+import modele.SSHTunnel;
 import java.sql.*;
 import java.util.ArrayList;
 import vue.*;
