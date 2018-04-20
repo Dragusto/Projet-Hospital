@@ -39,8 +39,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     private final JOptionPane error;
 
     // déclaration Swing fenetre pour Rechercher
-    private final JLabel Champ, Table, C1, C2, C3, rang;
-    private final JTextField RequeteChamp, RequeteTable, RequeteC1, RequeteC2, RequeteC3, Requeterang;
+    private final JLabel Champ, Table, C1, C2, C3, rang, Table2, JC1, JC2, MOY, COUNT, GROUP,SUM;
+    private final JTextField RequeteChamp, RequeteTable, RequeteC1, RequeteC2, RequeteC3;
+    private final JTextField Requeterang, RequeteTable2,JointC1,JointC2,Groupement;
+    private final JCheckBox Moyenne, Count,Somme;
     private final JPanel p4;
 
     // Declaration Swing fenetre pour Modifier
@@ -131,7 +133,15 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         RequeteC2 = new JTextField(null);
         RequeteC3 = new JTextField(null);
         Requeterang = new JTextField(null);
-
+        RequeteTable2 = new JTextField(null);
+        JointC1 = new JTextField(null);
+        JointC2 = new JTextField(null);
+        Groupement = new JTextField(null);
+        //CheckBox pour Rechercher
+        Moyenne = new JCheckBox();
+        Count = new JCheckBox();
+        Somme = new JCheckBox();
+        
         // Texte pour modifier
         ModTable = new JTextField(null);
         Mod1 = new JTextField(null);
@@ -171,6 +181,13 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         C2 = new JLabel("Condition :", JLabel.CENTER);
         C3 = new JLabel("Condition :", JLabel.CENTER);
         rang = new JLabel("Rang : ", JLabel.CENTER);
+        Table2 = new JLabel("Table2 : ", JLabel.CENTER);
+        JC1 = new JLabel("Condition Table1 : ", JLabel.CENTER);
+        JC2 = new JLabel("Condition Table2 : ", JLabel.CENTER);
+        MOY = new JLabel("Moyenne : ", JLabel.CENTER);
+        COUNT = new JLabel("Compter : ", JLabel.CENTER);
+        SUM = new JLabel("Somme :", JLabel.CENTER);
+        GROUP = new JLabel("Grouper par :", JLabel.CENTER);
 
         // Label pour modifier
         MCT = new JLabel("Table :", JLabel.CENTER);
@@ -388,31 +405,79 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
 
     public String rechercher() {
         // récupérer le texte de la requête
+        String requetetable2 = RequeteTable2.getText();
         String requetechamp = RequeteChamp.getText();
         String requetetable = RequeteTable.getText();
         String requetec1 = RequeteC1.getText();
         String requetec2 = RequeteC2.getText();
+        String jointc1 = JointC1.getText();
+        String jointc2 = JointC2.getText();
         String requetec3 = RequeteC3.getText();
-        String requeterand = Requeterang.getText();
+        String group = Groupement.getText();
+        boolean sum = Somme.isSelected();
+        boolean moy = Moyenne.isSelected();
+        boolean ct = Count.isSelected();
         String requeteSelectionnee = null;
         // effacer les résultats
         fenetreRes.removeAll();
-        if (!"".equals(requetechamp)) {
-            requeteSelectionnee = "SELECT " + requetechamp;
+        if (!"".equals(requetechamp)) 
+        {
+            if(moy == true && ct ==false && sum==false && !"".equals(group) )
+            {
+                requeteSelectionnee = "SELECT "+ group +",AVG(" + requetechamp + ") ";
+            }
+            else if(ct == true && !"".equals(group))
+            {
+                requeteSelectionnee = "SELECT "+ group +",COUNT(" + requetechamp + ") ";
+            }
+            else if(sum == true && ct ==false && moy==false && "".equals(group) )
+            {
+                requeteSelectionnee = "SELECT "+ group +"SUM(" + requetechamp + ") ";
+            }
+            else if(sum == true && ct ==false && moy==false && !"".equals(group))
+            {
+                requeteSelectionnee = "SELECT "+ group +",SUM(" + requetechamp + ") ";
+            }
+            else if(moy == true && ct ==false && sum==false && "".equals(group) )
+            {
+                requeteSelectionnee = "SELECT "+ group +"AVG(" + requetechamp + ") ";
+            }
+            else if(ct == true && moy ==false && sum==false &&  "".equals(group))
+            {
+                requeteSelectionnee = "SELECT "+ group +"COUNT(" + requetechamp + ") ";
+            }
+            else if(ct ==false && moy == false && sum == false)
+            {
+                requeteSelectionnee = "SELECT " + requetechamp;
+            }
         }
-        if (!"".equals(requetetable)) {
+        if (!"".equals(requetetable)) 
+        {
             requeteSelectionnee = requeteSelectionnee + " FROM " + requetetable;
+           if (!"".equals(requetetable2))
+           {
+               requeteSelectionnee = requeteSelectionnee + " INNER JOIN " + requetetable2 + " ON " + requetetable + "." + jointc1 + " = " + requetetable2 +"."+ jointc2; ;
+           }
         }
-        if (!"".equals(requetec1)) {
+        if (!"".equals(requetec1)) 
+        {
             requeteSelectionnee = requeteSelectionnee + " WHERE " + requetec1;
-            if (!"".equals(requetec2)) {
+            if (!"".equals(requetec2)) 
+            {
                 requeteSelectionnee = requeteSelectionnee + " AND " + requetec2;
-                if (!"".equals(requetec3)) {
+                if (!"".equals(requetec3)) 
+                {
                     requeteSelectionnee = requeteSelectionnee + " AND " + requetec3;
                 }
             }
         }
+        
+        if (!"".equals(group))
+        {
+            requeteSelectionnee = requeteSelectionnee + " GROUP BY " + group;
+        }
         requeteSelectionnee = requeteSelectionnee + ";";
+        System.out.println(requeteSelectionnee);
         return (requeteSelectionnee);
     }
 
@@ -675,20 +740,34 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             connecl.removeNotify();
         }
         if (source == exec1) {
-            voir = new JFrame("Rechercher");
+             voir = new JFrame("Rechercher");
             voir.setResizable(false);
-            voir.setSize(500, 200);
-            p4.setLayout(new GridLayout(5, 2));
+            voir.setSize(1000, 210);
+            p4.setLayout(new GridLayout(6, 2));
             p4.add(Champ);
             p4.add(RequeteChamp);
             p4.add(Table);
             p4.add(RequeteTable);
+            p4.add(Table2);
+            p4.add(RequeteTable2);
             p4.add(C1);
             p4.add(RequeteC1);
             p4.add(C2);
             p4.add(RequeteC2);
             p4.add(C3);
             p4.add(RequeteC3);
+            p4.add(JC1);
+            p4.add(JointC1);
+            p4.add(JC2);
+            p4.add(JointC2);
+            p4.add(MOY);
+            p4.add(Moyenne);
+            p4.add(COUNT);
+            p4.add(Count);
+            p4.add(SUM);
+            p4.add(Somme);
+            p4.add(GROUP);
+            p4.add(Groupement);
             voir.add("Center", p4);
             voir.add("South", rechercher);
             voir.setVisible(true);
