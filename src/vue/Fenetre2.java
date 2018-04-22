@@ -424,7 +424,13 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         }
     }
 
-    // Fonction qui permet de nous retourner un String si l'utilisateur veut faire une recherche
+    /** 
+     * Fonction qui permet de nous retourner un String si l'utilisateur veut faire une recherche
+     * Crée une requête SQL SELECT qui peut utiliser des jointures, SUM, COUNT et AVG 
+     * 
+     * @return requeteSelectionnee
+     * */
+    
     public String rechercher() {
         // récupérer le texte de la requête
         String requetetable2 = RequeteTable2.getText();
@@ -496,7 +502,11 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         return (requeteSelectionnee); // retourne la requete
     }
 
-    // Fonction qui permet de nous retourner un String si l'utilisateur veut faire une modification
+    /** Fonction qui permet de nous retourner un String si l'utilisateur veut faire une modification
+     * Crée une requête UPDATE
+     * 
+     * @return requeteSelectionnee
+     */
     public String modifier() {
         // récupérer le texte de la requête
         String Modtable = ModTable.getText();
@@ -532,7 +542,12 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         return requeteSelectionnee;// retourne la requete
     }
 
-    // Fonction qui permet de nous retourner un String si l'utilisateur veut supprimer
+    /**
+     * Fonction qui permet de nous retourner un String si l'utilisateur veut supprimer
+     * Crée une requête DELETE
+     * 
+     * @return requeteSelectionnee 
+     * */
     public String supprimer() {
         // récupérer le texte de la requête
         String delt = DelT.getText();
@@ -554,7 +569,11 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         return requeteSelectionnee;// retourne la requete
     }
 
-    // Fonction qui permet de nous retourner un String si l'utilisateur veut ajouter
+    /** Fonction qui permet de nous retourner un String si l'utilisateur veut ajouter
+     * Crée une requete INSERT
+     * 
+     * @return requeteSelectionnee 
+     */
     public String ajouter() {
         // récupérer le texte de la requête
         String inta = InTa.getText();
@@ -579,6 +598,9 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         }
     }
 
+    /**
+     *
+     */
     public void afficherRequetesMaj() {
         for (String requete : maconnexion.requetesMaj) {
             listeDeRequetes.add(requete);
@@ -590,6 +612,8 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
      * Afficher et retourner les résultats de la requete sélectionnée
      *
      * @param requeteSelectionnee
+     * @return 
+     * @throws java.sql.SQLException
      */
     public ArrayList<String> afficherRes(String requeteSelectionnee) throws SQLException {
         ArrayList<String> liste = null;
@@ -960,6 +984,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
      *
      * Pour gerer les actions sur items d'une liste on utilise la methode
      * itemStateChanged
+     * @param evt
      */
     @Override
     @SuppressWarnings("CallToThreadDumpStack")

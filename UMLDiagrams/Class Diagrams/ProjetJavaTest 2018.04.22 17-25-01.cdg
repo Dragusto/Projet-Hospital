@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="ProjetJavaTest">
+  <ClassDiagramComponents>
+    <Class name="Connexion" package="controleur" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="conn" type="Connection" visibility="private"/>
+        <Field name="stmt" type="Statement" visibility="private"/>
+        <Field name="rset" type="ResultSet" visibility="private"/>
+        <Field name="rsetMeta" type="ResultSetMetaData" visibility="private"/>
+        <Field name="tables" type="ArrayList&lt;String&gt;" visibility="public"/>
+        <Field name="requetes" type="ArrayList&lt;String&gt;" visibility="public"/>
+        <Field name="requetesMaj" type="ArrayList&lt;String&gt;" visibility="public"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="nameDatabase"/>
+          <Argument type="String" name="loginDatabase"/>
+          <Argument type="String" name="passwordDatabase"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="usernameECE"/>
+          <Argument type="String" name="passwordECE"/>
+          <Argument type="String" name="loginDatabase"/>
+          <Argument type="String" name="passwordDatabase"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="ajouterTable" returnType="void" visibility="public">
+          <Argument type="String" name="table"/>
+        </Method>
+        <Method name="ajouterRequete" returnType="void" visibility="public">
+          <Argument type="String" name="requete"/>
+        </Method>
+        <Method name="ajouterRequeteMaj" returnType="void" visibility="public">
+          <Argument type="String" name="requete"/>
+        </Method>
+        <Method name="remplirChampsTable" returnType="ArrayList" visibility="public">
+          <Argument type="String" name="table"/>
+        </Method>
+        <Method name="remplirChampsRequete" returnType="ArrayList" visibility="public">
+          <Argument type="String" name="requete"/>
+        </Method>
+        <Method name="executeUpdate" returnType="void" visibility="public">
+          <Argument type="String" name="requeteMaj"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ProjetJavaTest" package="controleur" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SSHTunnel" package="modele" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="firstHost" type="String" visibility="private"/>
+        <Field name="secondHost" type="String" visibility="private"/>
+        <Field name="firstHostPort" type="int" visibility="private"/>
+        <Field name="secondHostPort" type="int" visibility="private"/>
+        <Field name="username" type="String" visibility="private"/>
+        <Field name="password" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="username"/>
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="firstHost"/>
+          <Argument type="String" name="secondHost"/>
+          <Argument type="int" name="firstHostPort"/>
+          <Argument type="int" name="secondHostPort"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="username"/>
+          <Argument type="String" name="password"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="connect" returnType="boolean" visibility="public"/>
+        <Method name="getFirstHost" returnType="String" visibility="public"/>
+        <Method name="setFirstHost" returnType="void" visibility="private">
+          <Argument type="String" name="firstHost"/>
+        </Method>
+        <Method name="getSecondHost" returnType="String" visibility="public"/>
+        <Method name="setSecondHost" returnType="void" visibility="private">
+          <Argument type="String" name="secondHost"/>
+        </Method>
+        <Method name="getFirstHostPort" returnType="int" visibility="public"/>
+        <Method name="setFirstHostPort" returnType="void" visibility="private">
+          <Argument type="int" name="firstHostPort"/>
+        </Method>
+        <Method name="getSecondHostPort" returnType="int" visibility="public"/>
+        <Method name="setSecondHostPort" returnType="void" visibility="private">
+          <Argument type="int" name="secondHostPort"/>
+        </Method>
+        <Method name="getUsername" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Fenetre2" package="vue" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="maconnexion" type="Connexion" visibility="private"/>
+        <Field name="nameECETexte" type="JTextField" visibility="private" isFinal="true"/>
+        <Field name="nameECE" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="passwdECETexte" type="JPasswordField" visibility="private" isFinal="true"/>
+        <Field name="connect" type="JButton" visibility="private" isFinal="true"/>
+        <Field name="p0" type="JPanel" visibility="private" isFinal="true"/>
+        <Field name="p01" type="JLayeredPane" visibility="private" isFinal="true"/>
+        <Field name="connecc" type="JFrame" visibility="private"/>
+        <Field name="requeteSQL" type="JTextField" visibility="private" isFinal="true"/>
+        <Field name="tab" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="vide1" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="nameSQL" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="exec1" type="JButton" visibility="private" isFinal="true"/>
+        <Field name="rechercher" type="JButton" visibility="private" isFinal="true"/>
+        <Field name="listeDeTables" type="java.awt.List" visibility="private" isFinal="true"/>
+        <Field name="fenetreLignes" type="JTextArea" visibility="private" isFinal="true"/>
+        <Field name="p1" type="JPanel" visibility="private" isFinal="true"/>
+        <Field name="p21" type="JScrollPane" visibility="private" isFinal="true"/>
+        <Field name="error" type="JOptionPane" visibility="private" isFinal="true"/>
+        <Field name="voir" type="JFrame" visibility="private"/>
+        <Field name="Champ" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="RequeteChamp" type="JTextField" visibility="private" isFinal="true"/>
+        <Field name="Requeterang" type="JTextField" visibility="private" isFinal="true"/>
+        <Field name="Moyenne" type="JCheckBox" visibility="private" isFinal="true"/>
+        <Field name="p4" type="JPanel" visibility="private" isFinal="true"/>
+        <Field name="modif" type="JFrame" visibility="private"/>
+        <Field name="M1" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="ModTable" type="JTextField" visibility="private" isFinal="true"/>
+        <Field name="p5" type="JPanel" visibility="private" isFinal="true"/>
+        <Field name="suppr" type="JFrame" visibility="private"/>
+        <Field name="DT" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="DelT" type="JTextField" visibility="private" isFinal="true"/>
+        <Field name="p6" type="JPanel" visibility="private" isFinal="true"/>
+        <Field name="ajout" type="JFrame" visibility="private"/>
+        <Field name="IT" type="JLabel" visibility="private" isFinal="true"/>
+        <Field name="InTa" type="JTextField" visibility="private" isFinal="true"/>
+        <Field name="p7" type="JPanel" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="remplirTables" returnType="void" visibility="private"/>
+        <Method name="remplirRequetes" returnType="void" visibility="private"/>
+        <Method name="remplirRequetesMaj" returnType="void" visibility="private"/>
+        <Method name="afficherTables" returnType="void" visibility="public"/>
+        <Method name="afficherLignes" returnType="void" visibility="public">
+          <Argument type="String" name="nomTable"/>
+        </Method>
+        <Method name="rechercher" returnType="String" visibility="public"/>
+        <Method name="modifier" returnType="String" visibility="public"/>
+        <Method name="supprimer" returnType="String" visibility="public"/>
+        <Method name="ajouter" returnType="String" visibility="public"/>
+        <Method name="afficherRequetes" returnType="void" visibility="public"/>
+        <Method name="afficherRequetesMaj" returnType="void" visibility="public"/>
+        <Method name="afficherRes" returnType="ArrayList&lt;String&gt;" visibility="public">
+          <Argument type="String" name="requeteSelectionnee"/>
+        </Method>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="evt"/>
+        </Method>
+        <Method name="itemStateChanged" returnType="void" visibility="public">
+          <Argument type="ItemEvent" name="evt"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="maconnexion" source="vue.Fenetre2" target="controleur.Connexion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
