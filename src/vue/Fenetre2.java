@@ -24,7 +24,7 @@ import controleur.Connexion;
  * Affiche dans la fenetre graphique les champs de tables et les requetes de la
  * BDD
  *
- * @author segado
+ * @author Quentin
  */
 public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     /*
@@ -173,9 +173,9 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         res = new JLabel("Résultats requête", JLabel.CENTER);
         nameECE = new JLabel("login ECE :", JLabel.CENTER);
         passwdECE = new JLabel("password ECE :", JLabel.CENTER);
-        loginBDD = new JLabel("login base :", JLabel.CENTER);
+        loginBDD = new JLabel("login local :", JLabel.CENTER);
         vide1 = new JLabel("  ", JLabel.CENTER);
-        passwdBDD = new JLabel("password base :", JLabel.CENTER);
+        passwdBDD = new JLabel("password local :", JLabel.CENTER);
         nameBDD = new JLabel("           nom base :", JLabel.CENTER);
         vide2 = new JLabel("  ", JLabel.CENTER);
         nameSQL = new JLabel("Entrez votre requete de sélection :", JLabel.CENTER);
@@ -692,10 +692,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                     System.out.println("Connexion echouee : probleme SQL");
                     e.printStackTrace();
                     // message errreur graphique
-                    error.showMessageDialog(null, "Les informations saisies sont incorrect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                    error.showMessageDialog(null, "Les informations saisies sont incorrectes", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                error.showMessageDialog(null, "Les informations saisies sont incorrect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                error.showMessageDialog(null, "Les informations saisies sont incorrectes", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
         } else if (source == local) {
             ArrayList<String> liste;
@@ -703,7 +703,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 try {
                     try {
                         // tentative de connexion si les 4 attributs sont remplis
-                        maconnexion = new Connexion(nameBDDTexte.getText(), "root", "");
+                        maconnexion = new Connexion(nameBDDTexte.getText(), loginBDDTexte.getText(), passwdBDDTexte.getText());
                         setVisible(false);
                         p3.add(p312);
                         p3.add(p32);
@@ -756,10 +756,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                     System.out.println("Connexion echouee : probleme SQL");
                     e.printStackTrace();
                     //message erreur
-                    error.showMessageDialog(null, "la base local est incorect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                    error.showMessageDialog(null, "Les informations saisies sont incorrectes", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                error.showMessageDialog(null, "la base local est incorect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+                error.showMessageDialog(null, "Vous n'avez pas rentrée de base", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
         // permete de fermer la session gandalf
@@ -895,7 +895,6 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             } catch (SQLException ex) {
                 error.showMessageDialog(null, "Requete modifier invalide", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
-
         }
         // permet d'executer la requete SQL Modifier
         if (source == modifier) {
