@@ -33,50 +33,55 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
      */
 
     private Connexion maconnexion;
-    private final JLabel tab, req, res, lignes;
-    private final JLabel nameECE, passwdECE, loginBDD, passwdBDD, nameBDD;
-    private final JLabel vide1, vide2;
-    private final JOptionPane error;
 
+    // Declaration de la fenetre Connection
+    private final JTextField nameECETexte, loginBDDTexte, nameBDDTexte; // declaration des champs de texte
+    private final JLabel nameECE, passwdECE, loginBDD, passwdBDD, nameBDD; // declaration des label
+    private final JPasswordField passwdECETexte, passwdBDDTexte; // declaration des champs pour les mdp
+    private final JButton connect, local; // declaration des boutons
+    private final JPanel p0, nord; // declaration du panneau
+    private final JLayeredPane p01;// declaration d'un panel
+
+    // Declaration des fenetre connecte en local et grace a gandalf
+    private JFrame connecc, connecl; // declaration de fenetre
+    private final JTextField requeteSQL; // declaration des champs de texte
+    private final JLabel tab, req, res, lignes;// declaration des labels
+    private final JLabel vide1, vide2;
+    private final JLabel nameSQL;
+    private final JButton exec1, exec2, exec3, exec4, deco1, deco2, SQL; // declaration des boutons
+    private final JButton rechercher, supprimer, ajouter, modifier;
+    private final java.awt.List listeDeTables, listeDeRequetes; // declaration des listes
+    private final JTextArea fenetreLignes, fenetreRes; // declaration des aires de texte
+    private final JPanel p1, p2, p3, p311, p312, p32; // declaration des panels
+    private final JScrollPane p21, p22; // declaration des panels avec scrolling en plus
+    private final JOptionPane error; // declaration d'une fenetre d'erreur
+
+    // déclaration de fenetre permetant d'utiliser les fonctions rechercher, modifier, supprimer et ajouter
     // déclaration Swing fenetre pour Rechercher
-    private final JLabel Champ, Table, C1, C2, C3, rang, Table2, JC1, JC2, MOY, COUNT, GROUP, SUM;
-    private final JTextField RequeteChamp, RequeteTable, RequeteC1, RequeteC2, RequeteC3;
-    private final JTextField Requeterang, RequeteTable2, JointC1, JointC2, Groupement;
-    private final JCheckBox Moyenne, Count, Somme;
-    private final JPanel p4;
+    private JFrame voir;// declaration de fenetre
+    private final JLabel Champ, Table, C1, C2, C3, rang, Table2, JC1, JC2, MOY, COUNT, GROUP, SUM;// declaration des labels
+    private final JTextField RequeteChamp, RequeteTable, RequeteC1, RequeteC2, RequeteC3; // declaration des champs de texte
+    private final JTextField Requeterang, RequeteTable2, JointC1, JointC2, Groupement; // declaration des champs de texte
+    private final JCheckBox Moyenne, Count, Somme; // declaration de boitite a cocher facon boolean
+    private final JPanel p4; // declaration de panel
 
     // Declaration Swing fenetre pour Modifier
-    private final JLabel M1, M2, M3, MC1, MC2, MCT;
-    private final JTextField ModTable, Mod1, Mod2, Mod3, ModC1, ModC2;
-    private final JPanel p5;
+    private JFrame modif;// declaration de fenetre
+    private final JLabel M1, M2, M3, MC1, MC2, MCT;// declaration des labels
+    private final JTextField ModTable, Mod1, Mod2, Mod3, ModC1, ModC2; // declaration des champs de texte
+    private final JPanel p5;// declaration de panel
 
     // Declaration Swing fenetre Supprimer
-    private final JLabel DT, DC1, DC2;
-    private final JTextField DelT, DelC1, DelC2;
-    private final JPanel p6;
+    private JFrame suppr;// declaration de fenetre
+    private final JLabel DT, DC1, DC2;// declaration des labels
+    private final JTextField DelT, DelC1, DelC2; // declaration des champs de texte
+    private final JPanel p6;// declaration de panel
 
     // Declaration Swing fenetre Ajouter
-    private final JLabel IT, IC, IV;
-    private final JTextField InTa, InC, InV;
-    private final JPanel p7;
-
-    //Déclaration Swing Fenêtre principale
-    private final JTextField nameECETexte, loginBDDTexte, nameBDDTexte;
-    private final JPasswordField passwdECETexte, passwdBDDTexte;
-    private final JButton connect, local;
-    private final JButton exec1, exec2, exec3, exec4, deco, SQL;
-    private final JButton rechercher, supprimer, ajouter, modifier;
-    private final java.awt.List listeDeTables, listeDeRequetes;
-    private final JTextArea fenetreLignes, fenetreRes;
-    private final JLabel nameSQL;
-    private final JPanel p0, p1, nord, p2, p3, p31, p32;
-    private final JScrollPane p21, p22;
-    private final JLayeredPane p01;
-    private final JTextField requeteSQL;
-    // declaration de fenetre
-    private JFrame c, connecc, connecl;
-    // déclaration de fenetre permetant d'utiliser les fonctions rechercher, modifier, supprimer et ajouter
-    private JFrame voir, modif, suppr, ajout;
+    private JFrame ajout;// declaration de fenetre
+    private final JLabel IT, IC, IV;// declaration des labels
+    private final JTextField InTa, InC, InV; // declaration des champs de texte
+    private final JPanel p7;// declaration de panel
 
     /**
      * Constructeur qui initialise tous les objets graphiques de la fenetre
@@ -95,12 +100,13 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         connect = new JButton("Connexion ECE");
         local = new JButton("Connexion locale");
         local.setSize(new Dimension(60, 100));
-        // Boutons selection choix
+        // creation boutons selection choix
         exec1 = new JButton("Rechercher");
         exec2 = new JButton("Modifier");
         exec3 = new JButton("Supprimer");
         exec4 = new JButton("Ajouter");
-        deco = new JButton("Deconnection");
+        deco1 = new JButton("Deconnection");
+        deco2 = new JButton("Deconnection");
         SQL = new JButton("Executer");
 
         //Creation messages erreur
@@ -208,16 +214,21 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         IV = new JLabel("Valeurs :", JLabel.CENTER);
 
         // creation des panneaux
+        // panel pour se connecter
         p0 = new JPanel();
         p01 = new JLayeredPane();
-        p1 = new JPanel();
         nord = new JPanel();
+
+        // Panel seclection des requetes
+        p1 = new JPanel();
         p2 = new JPanel();
         p21 = new JScrollPane(fenetreLignes);
         p22 = new JScrollPane(fenetreRes);
         p3 = new JPanel();
-        p31 = new JPanel();
+        p311 = new JPanel();
+        p312 = new JPanel();
         p32 = new JPanel();
+
         // Panel pour Rechercher
         p4 = new JPanel();
         // Panel pour Modifier
@@ -234,10 +245,11 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         nord.setLayout(new BoxLayout(nord, BoxLayout.PAGE_AXIS));
         p2.setLayout(new GridLayout(1, 3));
         p3.setLayout(new GridLayout(2, 1));
-        p31.setLayout(new GridLayout(1, 5));
+        p311.setLayout(new GridLayout(1, 5));
+        p312.setLayout(new GridLayout(1, 5));
         p32.setLayout(new GridLayout(1, 3));
 
-        // ajout des objets graphqiues dans les panneaux
+        // ajout des objets graphqiues dans les panneaux p0 p01 et nord
         p0.add(nameECE);
         p0.add(nameECETexte);
         p0.add(passwdECE);
@@ -246,22 +258,22 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         p0.add(loginBDDTexte);
         p0.add(passwdBDD);
         p0.add(passwdBDDTexte);
-
         p01.add(nameBDD);
         p01.add(nameBDDTexte);
-
         nord.add(p0);
-        connect.setPreferredSize(new Dimension(100, 60));
+        connect.setPreferredSize(new Dimension(100, 60));// redimentionne le bouton connect
         nord.add(connect);
         nord.add(vide1);
-        p01.setPreferredSize(new Dimension(500, 50));
+        p01.setPreferredSize(new Dimension(500, 50));// redimentionne lepanneau p01
         nord.add(p01);
-        local.setPreferredSize(new Dimension(100, 60));
+        local.setPreferredSize(new Dimension(100, 60));// redimentionne le bouton local
         nord.add(local);
         nord.add(vide2);
 
+        // ajout du panel nord dans notre fenetre
         add(nord);
-//        // ajout des listeners
+
+        // ajout des listeners
         connect.addActionListener(this);
         local.addActionListener(this);
         nameECETexte.addActionListener(this);
@@ -276,7 +288,8 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         exec2.addActionListener(this);
         exec3.addActionListener(this);
         exec4.addActionListener(this);
-        deco.addActionListener(this);
+        deco1.addActionListener(this);
+        deco2.addActionListener(this);
         SQL.addActionListener(this);
 
         // Ajouts des Listeners de confirmation
@@ -296,26 +309,31 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         fenetreRes.setBackground(new Color(212, 227, 247));
         p1.setBackground(Color.LIGHT_GRAY);
 
+        // ajout des objets graphqiues dans les panneaux p1
         p1.add(tab);
         p1.add(lignes);
         p1.add(res);
-
+        // ajout des objets graphqiues dans les panneaux p2
         p2.add(listeDeTables);
         p2.add(p21);
         p2.add(p22);
-        // ajout des objets graphique des requetes
-        p31.add(exec1);
-        p31.add(exec2);
-        p31.add(exec3);
-        p31.add(exec4);
-        p31.add(deco);
+        // ajout des objets graphique des requetes pour la fenetre gandalf
+        p311.add(exec1);
+        p311.add(exec2);
+        p311.add(exec3);
+        p311.add(exec4);
+        p311.add(deco1);
+        // ajout des objets graphique des requetes pour la fenetre local
+        p312.add(exec1);
+        p312.add(exec2);
+        p312.add(exec3);
+        p312.add(exec4);
+        p312.add(deco2);
         // ajout de la requete sql manuel
         p32.add(nameSQL);
         p32.add(requeteSQL);
         p32.add(SQL);
 
-        p3.add(p31);
-        p3.add(p32);
         // disposition geographique des panneaux
         this.setVisible(true);
 
@@ -346,6 +364,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
      * Méthode privée qui initialise la liste des requetes de selection KI
      */
     private void remplirRequetes() {
+
     }
 
     /**
@@ -368,6 +387,8 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
     /**
      *
      * Afficher les lignes de la table sélectionnée
+     *
+     * @param nomTable
      */
     public void afficherLignes(String nomTable) {
         try {
@@ -403,6 +424,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         }
     }
 
+    // Fonction qui permet de nous retourner un String si l'utilisateur veut faire une recherche
     public String rechercher() {
         // récupérer le texte de la requête
         String requetetable2 = RequeteTable2.getText();
@@ -414,12 +436,15 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         String jointc2 = JointC2.getText();
         String requetec3 = RequeteC3.getText();
         String group = Groupement.getText();
+        // recupère le choix de l'utilisateur des checkbox
         boolean sum = Somme.isSelected();
         boolean moy = Moyenne.isSelected();
         boolean ct = Count.isSelected();
+        // declaration d'un string
         String requeteSelectionnee = null;
         // effacer les résultats
         fenetreRes.removeAll();
+        // permet de transformer la requete de l'utilisateur en SQL avec blindage si il s'est trompé
         if (!"".equals(requetechamp) || (moy == true && ct == true) || (moy == true && sum == true) || (ct == true && sum == true)) {
             if (moy == true && ct == false && sum == false && !"".equals(group)) {
                 requeteSelectionnee = "SELECT " + group + ",AVG(" + requetechamp + ") ";
@@ -443,6 +468,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 requeteSelectionnee = "SELECT " + requetechamp;
 
             } else {
+                // affiche le message d'erreur si requete sql fausse
                 error.showMessageDialog(null, "Impossible de faire cete requete", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -465,11 +491,12 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         if (!"".equals(group)) {
             requeteSelectionnee = requeteSelectionnee + " GROUP BY " + group;
         }
-        requeteSelectionnee = requeteSelectionnee + ";";
+        requeteSelectionnee = requeteSelectionnee + ";"; // permet de me tre un ; à la toutes fin de la requetes
         System.out.println(requeteSelectionnee);
-        return (requeteSelectionnee);
+        return (requeteSelectionnee); // retourne la requete
     }
 
+    // Fonction qui permet de nous retourner un String si l'utilisateur veut faire une modification
     public String modifier() {
         // récupérer le texte de la requête
         String Modtable = ModTable.getText();
@@ -478,6 +505,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         String mod1 = Mod1.getText();
         String mod2 = Mod2.getText();
         String mod3 = Mod3.getText();
+        // declaration d'un String
         String requeteSelectionnee = null;
         // effacer les résultats
         fenetreRes.removeAll();
@@ -501,14 +529,16 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         }
         requeteSelectionnee = requeteSelectionnee + " ;";
         System.out.println(requeteSelectionnee);
-        return requeteSelectionnee;
+        return requeteSelectionnee;// retourne la requete
     }
 
+    // Fonction qui permet de nous retourner un String si l'utilisateur veut supprimer
     public String supprimer() {
         // récupérer le texte de la requête
         String delt = DelT.getText();
         String delc1 = DelC1.getText();
         String delc2 = DelC2.getText();
+        // Declaration d'un String
         String requeteSelectionnee = null;
         // effacer les résultats
         fenetreRes.removeAll();
@@ -521,20 +551,22 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         }
         requeteSelectionnee = requeteSelectionnee + " ;";
         System.out.println(requeteSelectionnee);
-        return requeteSelectionnee;
+        return requeteSelectionnee;// retourne la requete
     }
 
+    // Fonction qui permet de nous retourner un String si l'utilisateur veut ajouter
     public String ajouter() {
         // récupérer le texte de la requête
         String inta = InTa.getText();
         String inc = InC.getText();
         String inv = InV.getText();
+        // Declaration d'un String
         String requeteSelectionnee = null;
         // effacer les résultats
         fenetreRes.removeAll();
         requeteSelectionnee = "INSERT INTO " + inta + "(" + inc + ") VALUES(" + inv + ");";
         System.out.println(requeteSelectionnee);
-        return requeteSelectionnee;
+        return requeteSelectionnee; // retourne la requete
     }
 
     /**
@@ -598,9 +630,10 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
         // tester cas de la commande evenementielle
         if (source == connect) {
             ArrayList<String> liste;
+            // recupère les information fournis pas l'utilisateur
             String passwdECEString = new String(passwdECETexte.getPassword());
             String passwdBDDString = new String(passwdBDDTexte.getPassword());
-            if ((!"".equals(nameECETexte.getText())) || (!"".equals(passwdECEString)) || (!"".equals(loginBDDTexte.getText())) || (!"".equals(passwdBDDString))) {
+            if ((!"".equals(nameECETexte.getText())) && (!"".equals(passwdECEString)) && (!"".equals(loginBDDTexte.getText())) && (!"".equals(passwdBDDString))) {
                 try {
                     try {
 
@@ -608,12 +641,16 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                         maconnexion = new Connexion(nameECETexte.getText(), passwdECEString,
                                 loginBDDTexte.getText(), passwdBDDString);
                         setVisible(false);
+                        p3.add(p311);
+                        p3.add(p32);
+                        // declaration de notre nouvelle fenetre
                         connecc = new JFrame("Connecté");
                         connecc.pack();
                         connecc.setDefaultLookAndFeelDecorated(true);
                         connecc.setExtendedState(Fenetre2.MAXIMIZED_BOTH);
                         connecc.setVisible(true);
                         connecc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        // ajout des panels à la fenetre connecc
                         connecc.add("North", p1);
                         connecc.add("Center", p2);
                         connecc.add("South", p3);
@@ -654,6 +691,7 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 } catch (SQLException e) {
                     System.out.println("Connexion echouee : probleme SQL");
                     e.printStackTrace();
+                    // message errreur graphique
                     error.showMessageDialog(null, "Les informations saisies sont incorrect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
@@ -667,13 +705,16 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                         // tentative de connexion si les 4 attributs sont remplis
                         maconnexion = new Connexion(nameBDDTexte.getText(), "root", "");
                         setVisible(false);
+                        p3.add(p312);
+                        p3.add(p32);
+                        // declaration de la fenetre connecl
                         connecl = new JFrame("Connecté");
                         connecl.pack();
                         connecl.setDefaultLookAndFeelDecorated(true);
                         connecl.setExtendedState(Fenetre2.MAXIMIZED_BOTH);
                         connecl.setVisible(true);
                         connecl.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+                        // ajout des panels dans la fenetre
                         connecl.add("North", p1);
                         connecl.add("Center", p2);
                         connecl.add("South", p3);
@@ -714,25 +755,31 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                 } catch (SQLException e) {
                     System.out.println("Connexion echouee : probleme SQL");
                     e.printStackTrace();
+                    //message erreur
                     error.showMessageDialog(null, "la base local est incorect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 error.showMessageDialog(null, "la base local est incorect", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
-        if (source == deco) {
+        // permete de fermer la session gandalf
+        if (source == deco1) {
+            setVisible(true);
+            connecc.removeNotify();
+        }
+        //permet de fermer la session local
+        if (source == deco2) {
             setVisible(true);
             connecl.removeNotify();
         }
-        if (source == deco) {
-            setVisible(true);
-            connecl.removeNotify();
-        }
+        // permet d'afficher la fenetre Rechercher
         if (source == exec1) {
+            // declaration de la fenetre voir
             voir = new JFrame("Rechercher");
             voir.setResizable(false);
             voir.setSize(1000, 210);
             p4.setLayout(new GridLayout(6, 2));
+            // ajout des objet dans le panel
             p4.add(Champ);
             p4.add(RequeteChamp);
             p4.add(Table);
@@ -757,18 +804,22 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             p4.add(Somme);
             p4.add(GROUP);
             p4.add(Groupement);
+            // ajout du panel et du bouton dans la fenetre
             voir.add("Center", p4);
             voir.add("South", rechercher);
             voir.setVisible(true);
             // effacer les résultats
             fenetreRes.removeAll();
         }
+        // permet d'afficher la fenetre Modifier
         if (source == exec2) {
+            // Declaration de la fenetre
             modif = new JFrame("Modifier");
             modif.setResizable(false);
             modif.setSize(500, 200);
             modif.setVisible(true);
             p5.setLayout(new GridLayout(6, 2));
+            // ajout des objet dans le panel
             p5.add(MCT);
             p5.add(ModTable);
             p5.add(M1);
@@ -781,49 +832,55 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
             p5.add(ModC1);
             p5.add(MC2);
             p5.add(ModC2);
+            // ajout du panel et boutons dans la fenetre
             modif.add("Center", p5);
             modif.add("South", modifier);
             // effacer les résultats
             fenetreRes.removeAll();
-
         }
+        // permet d'afficher la fenetre Supprimer
         if (source == exec3) {
             suppr = new JFrame("Supprimer");
             suppr.setResizable(false);
             suppr.setSize(500, 140);
             suppr.setVisible(true);
             p6.setLayout(new GridLayout(3, 2));
+            // ajout des objet dans le panel
             p6.add(DT);
             p6.add(DelT);
             p6.add(DC1);
             p6.add(DelC1);
             p6.add(DC2);
             p6.add(DelC2);
+            // ajout du panel et boutons dans la fenetre
             suppr.add("Center", p6);
             suppr.add("South", supprimer);
 
             // effacer les résultats
             fenetreRes.removeAll();
         }
+        // permet d'afficher la fenetre Ajouter
         if (source == exec4) {
             ajout = new JFrame("Ajouter");
             ajout.setResizable(false);
             ajout.setSize(500, 140);
             ajout.setVisible(true);
             p7.setLayout(new GridLayout(3, 2));
+            // ajout des objet dans le panel
             p7.add(IT);
             p7.add(InTa);
             p7.add(IC);
             p7.add(InC);
             p7.add(IV);
             p7.add(InV);
+            // ajout du panel et boutons dans la fenetre
             ajout.add("Center", p7);
             ajout.add("South", ajouter);
 
             // effacer les résultats
             fenetreRes.removeAll();
         }
-
+        // permet d'executer la requete SQL Rechercher
         if (source == rechercher) {
             String requeteSelectionnee;
             requeteSelectionnee = rechercher();
@@ -833,44 +890,49 @@ public class Fenetre2 extends JFrame implements ActionListener, ItemListener {
                     maconnexion.ajouterRequete(requeteSelectionnee);
                     listeDeRequetes.removeAll();
                     afficherRequetes();
+                    voir.setVisible(false);
                 }
             } catch (SQLException ex) {
-
+                error.showMessageDialog(null, "Requete modifier invalide", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
-            voir.setVisible(false);
+
         }
+        // permet d'executer la requete SQL Modifier
         if (source == modifier) {
             String requeteSelectionnee;
             requeteSelectionnee = modifier();
             try {
                 maconnexion.executeUpdate(requeteSelectionnee);
+                modif.setVisible(false);
             } catch (SQLException ex) {
                 Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
                 error.showMessageDialog(null, "Requete modifier invalide", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
-            modif.setVisible(false);
         }
+        // permet d'executer la requete SQL Supprimer
         if (source == supprimer) {
             String requeteSelectionnee;
             requeteSelectionnee = supprimer();
             try {
                 maconnexion.executeUpdate(requeteSelectionnee);
+                suppr.setVisible(false);
             } catch (SQLException ex) {
                 Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
                 error.showMessageDialog(null, "Requete supprimer invalide", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
-            suppr.setVisible(false);
         }
+        // permet d'executer la requete SQL Ajouter
         if (source == ajouter) {
             String requeteSelectionnee;
             requeteSelectionnee = ajouter();
             try {
                 maconnexion.executeUpdate(requeteSelectionnee);
+                ajout.setVisible(false);
             } catch (SQLException ex) {
                 Logger.getLogger(Fenetre2.class.getName()).log(Level.SEVERE, null, ex);
                 error.showMessageDialog(null, "Requete ajouter inavalide", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
             }
-            ajout.setVisible(false);
+
         }
         if (source == SQL) {
             String requeteSelectionnee = requeteSQL.getText(); // récupérer le texte de la requête
